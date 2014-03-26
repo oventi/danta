@@ -1,0 +1,36 @@
+clear
+
+echo "Building danta"
+
+echo "-- Cleaning up"
+rm danta.min.css 2> /dev/null
+rm danta.min.js 2> /dev/null
+
+touch danta.min.css
+touch danta.min.js
+
+sleep 1 ########################################################################
+
+echo "-- Getting bootstrap css"
+wget "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" -qO bootstrap.min.css
+
+echo "-- Getting zepto js"
+wget "http://zeptojs.com/zepto.min.js" -qO zepto.min.js
+
+echo "-- Building css"
+cat bootstrap.min.css >> danta.min.css
+cat danta.css >> danta.min.css
+
+sleep 1 ########################################################################
+
+echo "-- Building js"
+cat zepto.min.js >> danta.min.js
+jsmin < danta.js >> danta.min.js
+jsmin < danta.config.js >> danta.min.js
+jsmin < danta.remote.js >> danta.min.js
+jsmin < danta.ui.js >> danta.min.js
+jsmin < danta.ui.widget.table.js >> danta.min.js
+
+sleep 1 ########################################################################
+
+echo "Done"
