@@ -12,9 +12,8 @@
     src: local('Ubuntu'), url(ubuntu.woff) format('woff');
 }
 
-/* ************************************************************************** */
+
 /* Layout ******************************************************************* */
-/* ************************************************************************** */
 
 /* body and all elements */
 * {
@@ -71,9 +70,68 @@ footer a {
     color: #333;
 }
 
-/* ************************************************************************** */
+
+/* UI / Widgets ************************************************************* */
+
+.ui {
+    border: 0;
+}
+
+.widget:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+/* default button */
+button.default {
+    padding: 1%;
+    color: #fff;
+    background: #333;
+    border: 0;
+}
+
+/* default dl, dt, dd */
+dl.default {
+    padding: 1%;
+    border: 1px solid #333;
+}
+dl.default dt {
+    background: #333;
+    color: #fff;
+    padding: 1%;
+}
+dl.default dd {
+    border: 1px solid #333;
+    padding: 1%;
+    margin-bottom: 1%;
+}
+
+/* default ul, li */
+ul.default > li {
+    border: 1px solid #333;
+    border-bottom: 0;
+    margin: 0;
+    padding: 1% 2%;
+}
+ul.default > li:last-child {
+    margin-bottom: 0;
+    border-bottom: 1px solid #333;
+}
+
+/* Behaviors **************************************************************** */
+
+.behavior_Selectable {
+    cursor: pointer;
+}
+.behavior_Selectable_selected {
+    background: #000;
+    color: #fff;
+}
+
 /* General purpose classes ************************************************** */
-/* ************************************************************************** */
 
 .clearfix:after {
     content: ".";
@@ -82,6 +140,8 @@ footer a {
     clear: both;
     visibility: hidden;
 }
+
+/*
 .clear {
     display: block;
     height: 0;
@@ -91,58 +151,19 @@ footer a {
 .hidden {
     display: none;
 }
-
-.no_widget {
-    width: 100%;
-    padding: 1%;
-    color: #fff;
-    background-color: red;
-    font-weight: bold;
-    opacity: 0.5;
-}
-
-/* ************************************************************************** */
-/* UI / Widgets ************************************************************* */
-/* ************************************************************************** */
-
-.ui {
-    border: 0;
-    /*border: 1px solid red;
-    padding: 1%;*/
-}
-
-.list > ul li {
-    border: 1px solid #333;
-    border-bottom: 0;
-    margin: 0;
-    padding: 1% 2%;
-}
-.list > ul li:last-child {
-    margin-bottom: 0;
-    border-bottom: 1px solid #333;
-}
-
-/*
-.group {
-    background: #ccc;
-}
-.label {
-    background: #ccc;
-}
 */
 
-/* ************************************************************************** */
+
 /* Media queries ************************************************************ */
-/* ************************************************************************** */
 
 /* Extra small devices */
-@media (max-width: 767px) { 
+@media (max-width: 767px) {
     section { margin-bottom: 1%; }
     section:last-child { margin-bottom: 0; }
 }
 
 /* Small devices */
-@media (min-width: 768px) and (max-width: 991px) { 
+@media (min-width: 768px) and (max-width: 991px) {
     section {
         margin-right: 1%;
         width: 49.5% !important;
@@ -153,7 +174,7 @@ footer a {
 }
 
 /* Medium devices */
-@media (min-width: 992px) and (max-width: 1199px) { 
+@media (min-width: 992px) and (max-width: 1199px) {
     section {
         margin-right: 1%;
         width: 49.5% !important;
@@ -164,7 +185,7 @@ footer a {
 }
 
 /* Large devices */
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
     section {
         margin-right: 1%;
         width: 24.3% !important;
