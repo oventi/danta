@@ -1,10 +1,14 @@
 danta.remote = {
     get_end_point: function () {
-        return danta.config.REMOTE_BASE_PATH + "/danta.php";
+        return danta.config.REMOTE_BASE_PATH;
     },
     
-    get: function () {},
+    call: function (fn, params, done) {
+        params["fn"] = fn;
+        $.post(danta.config.REMOTE_BASE_PATH, params, done);
+    }
     
+    /*
     get2: function (path, done) {
         $.get(danta.config.REMOTE_BASE_PATH + path, {}, function (response) {
             console.log("RESPONSE!");
@@ -18,4 +22,5 @@ danta.remote = {
             done(response);
         });
     }
+    */
 }

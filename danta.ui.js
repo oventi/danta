@@ -1,85 +1,4 @@
 danta.ui = {
-    behavior: {
-        Clickable: function (o, params) {
-            var clickable = o._behaviors.Clickable(o);
-            
-            clickable.collection.addClass("behavior_Clickable");
-            
-            clickable.collection.click(function () {
-                params.action($(this));
-            });
-        },
-        
-        Selectable: function (o, params) {
-            var selectable = o._behaviors.Selectable(o);
-            var collection = selectable.collection;
-            var css = {
-                selectable: "behavior_Selectable",
-                selected: "behavior_Selectable_selected"
-            };
-            
-            collection.addClass(css.selectable);
-            
-            if(params.multiple) {}
-            else { /* single select */
-                collection.click(function () {
-                    collection.removeClass(css.selected);
-                    $(this).addClass(css.selected);
-                    
-                    selectable.action(params);
-                });
-            }
-        }
-        
-        /*
-        Selectable: function (o, params) {
-            var collection = o.selectable();
-            o.selected_item = null;
-            
-            var onselect = function () {};
-            if(typeof params.action === "function") {
-                onselect = params.action;
-            }
-            
-            if(params.multiple) { // TODO: add/remove to selected_items
-                collection.click(function () {
-                    $(this).toggleClass("selected");
-                });
-            }
-            else { // single select
-                collection.click(function () {
-                    collection.removeClass("selected");
-                    $(this).addClass("selected");
-                    o.selected_index = $(this).index();
-                    o.selected_item = o.items[o.selected_index];
-                    onselect();
-                });
-            }
-            
-            o.get_selected = function () {
-                //var selected_items = [];
-                $(".selected", collection.parent()).each(function () {
-                  //  
-                });
-            }
-        }
-        */
-    },
-    
-    widget2: {
-        Widget2: {
-            behave: function (b, params) {
-                this._behaviors.push(b);
-                var behavior = danta.ui.behavior[b];
-                behavior(this, params || {});
-            }
-        },
-        List2: {
-            selectable: function () {
-                return this.get_view().children();
-            }
-        }
-    },
     
     /* ********************************************************************** */
     /* ********************************************************************** */
@@ -128,11 +47,54 @@ danta.ui = {
     
     /* user ui objects ****************************************************** */
     
-    
-    
     /* widget objects/functions ********************************************* */
     
     widget: {
+        Textbox: {
+            _family: ["Base", "ui._Widget"],
+            _behaviors: {
+                Typeable: function (w) {
+                    return {
+                        collection: $("input", w.element)
+                    };
+                },
+                Progressable: function () {
+                    return {};
+                }
+            },
+            
+            value: function () {
+                return $("input", this.element).val();
+            },
+            
+            render: function () {
+                var textbox = $('<input type="text" />').addClass("form-control");
+                
+                this.element.empty();
+                this.element.append(textbox);
+                this._attach_behaviors();
+            }
+        },
+        
+        MessageBox: {
+            _family: ["Base", "ui._Widget"],
+            _message: "",
+            
+            display: function (message) {
+                this._message = message;
+                this.render();
+            },
+            
+            render: function () {
+                this.element.addClass("message");
+                var msg = $("<div />").text(this._message);
+                
+                this.element.empty();
+                this.element.append(msg);
+                this._attach_behaviors();
+            }
+        },
+        
         Button: {
             _family: ["Base", "ui._Widget"],
             
@@ -140,12 +102,13 @@ danta.ui = {
             
             render: function () {
                 var label = this.get_param("label") || "button";
-                var button = $("<button />").addClass("default").text(label);
+                var button = $("<button />").addClass("btn btn-default").text(label);
                 
                 button.click(this.click);
                 
                 this.element.empty();
                 this.element.append(button);
+                this._attach_behaviors();
             }
         },
         
@@ -157,8 +120,10 @@ danta.ui = {
             render: function () {
                 var o = this;
                 
-                $("#" + this.id).find("button").each(function () {
-                    $(this).addClass("default");
+                o.element.addClass("btn-group");
+                
+                $("#" + o.id).find("button").each(function () {
+                    $(this).addClass("btn btn-default");
                     
                     var id = $(this).text().replace(" ", "_");
                     if(typeof o.actions[id] === "function") {
@@ -166,22 +131,7 @@ danta.ui = {
                     }
                 });
                 
-                /*
-                $("#" + this.id).children().each(function () {
-                    
-                    console.log(text, id);
-                    
-                    
-                });
-                */
-                //var buttons = $("#" + this.id).children();
-                //var buttons = $("button", );
-                //console.log(this.id);
-                //console.log(typeof o);
-                /*for(var i in buttons) {
-                    var button = buttons[i];
-                    console.log(button);
-                }*/
+                //this._attach_behaviors();
             }
         },
         
@@ -215,7 +165,7 @@ danta.ui = {
             
             render: function () {
                 if(!this.is_empty()) {
-                    var ul = $("<ul />").addClass("default list-unstyled");
+                    var ul = $("<ul />").addClass("list-unstyled list-group");
                     
                     this._list.forEach(function (e, i, a) {
                         var view = null;
@@ -233,7 +183,7 @@ danta.ui = {
                                 view = e;
                                 break;
                         }
-                        ul.append($("<li />").append(view));
+                        ul.append($("<li />").addClass("list-group-item").append(view));
                     });
                     
                     this.element.empty();
@@ -299,32 +249,47 @@ danta.ui = {
         var container = null;
         var row = null;
         
-        container = $("<div />").addClass("container-fluid");
+        // @TODO: how should the header and footer be styled?
         
-        row = $('<div class="row"></div>');
-        $("header").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
-        row.append($("header").detach());
-        container.append(row);
-        
-        row = $('<div class="row"></div>');
-        $("section").each(function (i, card) {
-            if(!$(card).hasClass("no_auto")) {
-                i+=1;
-                $(card).addClass("col-xs-12 col-sm-6 col-md-6 col-lg-3");
-                
-                if(i%2 == 0) { $(card).addClass("m2"); }
-                if(i%4 == 0) { $(card).addClass("m4"); }
-            }
-        });
-        row.append($("section").detach());
-        container.append(row);
-        
-        row = $('<div class="row"></div>');
-        $("footer").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
-        row.append($("footer").detach());
-        container.append(row);
-        
-        $("body").append(container);
+        if(!$("body").hasClass("no_autoload")) {
+            container = $("<div />").addClass("container-fluid");
+            
+            row = $('<div class="row"></div>');
+            
+            //$("header").addClass("page-header");
+            $("header").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
+            
+            row.append($("header").detach());
+            container.append(row);
+            
+            row = $('<div class="row"></div>');
+            $("section").each(function (i, card) {
+                if(!$(card).hasClass("no_autoload")) {
+                    i+=1;
+                    /*
+                     * Default stacking of cards:
+                     *      mobile: one
+                     *      tablet: two
+                     *      desktop: four
+                     */
+                    $(card).addClass("jumbotron col-xs-12 col-sm-6 col-md-6 col-lg-3");
+
+                    if(i%2 == 0) { $(card).addClass("m2"); }
+                    if(i%4 == 0) { $(card).addClass("m4"); }
+                }
+            });
+            row.append($("section").detach());
+            container.append(row);
+            
+            row = $('<div class="row"></div>');
+            
+            $("footer").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
+            
+            row.append($("footer").detach());
+            container.append(row);
+            
+            $("body").append(container);
+        }
         
         /* Widgets */
         var widgets = {};

@@ -9,67 +9,7 @@
 
 /* Layout ******************************************************************* */
 
-/* body and all elements */
-* {
-    font-size: 100% !important;
-}
-
-body {
-    background: #333;
-    border-radius: 0;
-    font-family: "Ubuntu", sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-}
-
-/* header */
-header {
-    background: #999;
-    padding: 2%;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-    margin-bottom: 1%;
-}
-header h1 {
-    margin-top: 10px !important;
-    text-align: center;
-}
-
-/* cards */
-section {
-    padding: 0 !important;
-}
-section h2 {
-    padding: 1%;
-    background: #999;
-    margin: 0;
-}
-section > div {
-    padding: 1%;
-    background: #999;
-    overflow: hidden;
-}
-
-/* footer */
-footer {
-    color: #333;
-    background: #999;
-    padding: 1%;
-    margin-top: 1%;
-    text-align: center;
-}
-footer a {
-    color: #333;
-}
-
-
 /* UI / Widgets ************************************************************* */
-
-.ui {
-    border: 0;
-}
 
 .widget {
     position: relative;
@@ -81,56 +21,6 @@ footer a {
     height: 0;
     clear: both;
     visibility: hidden;
-}
-
-/* default button */
-button.default {
-    padding: 1%;
-    color: #fff;
-    background: #333;
-    border: 0;
-}
-
-/* default textbox */
-input.default {
-    padding: 1%;
-    color: #333;
-    background: #fff;
-    border: 1px solid #333;
-}
-
-/* default dl, dt, dd */
-dl.default {
-    padding: 1%;
-    border: 1px solid #333;
-}
-dl.default dt {
-    background: #333;
-    color: #fff;
-    padding: 1%;
-}
-dl.default dd {
-    border: 1px solid #333;
-    padding: 1%;
-    margin-bottom: 1%;
-}
-
-/* default ul, li */
-ul.default > li {
-    border: 1px solid #333;
-    border-bottom: 0;
-    margin: 0;
-    padding: 1% 2%;
-}
-ul.default > li:last-child {
-    margin-bottom: 0;
-    border-bottom: 1px solid #333;
-}
-
-div.message {
-    background: #333;
-    color: #fff;
-    padding: 2%;
 }
 
 /* Behaviors **************************************************************** */
@@ -163,7 +53,6 @@ div.message {
     clear: both;
     visibility: hidden;
 }
-
 
 /* Media queries ************************************************************ */
 
