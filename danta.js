@@ -135,17 +135,6 @@ var danta = {
         //$.fn.extend(danta.$);
     },
     
-    caller: {},
-    
-    call: function (name) {
-        if(typeof this.caller[name] === "function") {
-            this.caller[name]();
-        }
-        else {
-            throw "danta.call: error";
-        }
-    },
-    
     app: function (app) {
         this.init_helpers();
         

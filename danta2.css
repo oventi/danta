@@ -1,4 +1,5 @@
 /* Default font Ubuntu */
+
 @font-face {
     font-family: "Ubuntu";
     font-style: normal;
@@ -6,8 +7,39 @@
     src: local('Ubuntu'), url(ubuntu.woff) format('woff');
 }
 
+/* Fonts ******************************************************************** */
+
+* {
+    font-family: "Ubuntu";
+}
 
 /* Layout ******************************************************************* */
+
+header, footer {
+    background: #eee;
+    padding: 1%;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 1%;
+}
+header h1 {
+    margin: 0;
+    text-align: center;
+}
+
+h2, h3 {
+    margin-top: 10px !important;
+}
+
+.jumbotron {
+    margin-bottom: 1%;
+}
+
+footer {
+    font-weight: normal;
+    margin-bottom: 0;
+    text-align: center;
+}
 
 /* UI / Widgets ************************************************************* */
 
@@ -35,13 +67,16 @@
 
 .behavior_Progressable > .progress {
     margin-bottom: 0;
-    width: 10%;
+    width: 20px;
     position: absolute;
     z-index: 999;
     right: 0;
+    display: none;
+    border-radius: 20px;
 }
 .behavior_Progressable .progress-bar {
     width: 100%;
+    border-radius: 20px;
 }
 
 /* General purpose classes ************************************************** */
@@ -60,6 +95,8 @@
 @media (max-width: 767px) {
     section { margin-bottom: 1%; }
     section:last-child { margin-bottom: 0; }
+    
+    footer { margin-top: 1%; }
 }
 
 /* Small devices */
@@ -70,7 +107,8 @@
         margin-bottom: 1%;
     }
     section.m2 { margin-right: 0; }
-    footer { margin-top: 0; }
+    
+    footer { margin-top: 1%; }
 }
 
 /* Medium devices */
@@ -81,7 +119,6 @@
         margin-bottom: 1%;
     }
     section.m2 { margin-right: 0; }
-    footer { margin-top: 0; }
 }
 
 /* Large devices */
@@ -91,6 +128,13 @@
         width: 24.3% !important;
         margin-bottom: 1%;
     }
+    
     section.m4 { margin-right: 0; }
-    footer { margin-top: 0; }
+    section.m4:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
 }

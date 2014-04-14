@@ -12,8 +12,8 @@ danta.ui = {
             this._behave = this._behave || [];
             
             this._behave.forEach(function (e, i, a) {
-                var bo = danta.ui.behavior[e.behavior];
-                bo(this, e.params);
+                var behavior = danta.ui.behavior[e.behavior];
+                behavior(this, e.params);
             }, this);
         },
         
@@ -42,7 +42,10 @@ danta.ui = {
             }
             
             this.element.append(dl);
-        }
+        },
+        
+        hide: function () { this.element.hide(); },
+        show: function () { this.element.show(); }
     },
     
     /* user ui objects ****************************************************** */
@@ -50,6 +53,25 @@ danta.ui = {
     /* widget objects/functions ********************************************* */
     
     widget: {
+        View: {
+            _family: ["Base", "ui._Widget"],
+            _data: null,
+            
+            set_data: function (data) {
+                this._data = data;
+                this.render();
+            },
+            
+            render: function () {
+                var e = this.element;
+                if(this._data) {
+                    for(var i in this._data) {
+                        $("#" + i, e).text(this._data[i]);
+                    }
+                }
+            }
+        },
+        
         Textbox: {
             _family: ["Base", "ui._Widget"],
             _behaviors: {
@@ -68,7 +90,9 @@ danta.ui = {
             },
             
             render: function () {
+                var label = this.get_param("label") || "";
                 var textbox = $('<input type="text" />').addClass("form-control");
+                textbox.attr("placeholder", label);
                 
                 this.element.empty();
                 this.element.append(textbox);
@@ -76,22 +100,24 @@ danta.ui = {
             }
         },
         
-        MessageBox: {
+        Alert: {
             _family: ["Base", "ui._Widget"],
             _message: "",
+            _type: "",
             
-            display: function (message) {
-                this._message = message;
+            display: function (message, type) {
+                this._message = message || "";
+                this._type = type || "info";
+                
                 this.render();
             },
             
             render: function () {
-                this.element.addClass("message");
-                var msg = $("<div />").text(this._message);
-                
                 this.element.empty();
+                
+                var msg = $("<div />").addClass("alert alert-" + this._type).text(this._message);
                 this.element.append(msg);
-                this._attach_behaviors();
+                this.show();
             }
         },
         

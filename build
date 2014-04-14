@@ -22,7 +22,6 @@ echo "-- Getting zepto js"
 
 echo "-- Building css"
 cat bootstrap.min.css >> danta.min.css
-#cat danta.css >> danta.min.css
 cat danta2.css >> danta.min.css
 
 #sleep 1 ########################################################################
