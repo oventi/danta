@@ -55,11 +55,23 @@ danta.ui = {
     widget: {
         View: {
             _family: ["Base", "ui._Widget"],
+            _behaviors: {
+                Progressable: function () { return {}; }
+            },
             _data: null,
             
-            set_data: function (data) {
+            load: function (data) {
                 this._data = data;
                 this.render();
+            },
+            
+            hide: function (only_container) { 
+                var e = only_container ? $(".container", this.element) : this.element;
+                e.hide();
+            },
+            show: function (only_container) { 
+                var e = only_container ? $(".container", this.element) : this.element;
+                e.show();
             },
             
             render: function () {
@@ -69,6 +81,8 @@ danta.ui = {
                         $("#" + i, e).text(this._data[i]);
                     }
                 }
+                
+                this._attach_behaviors();
             }
         },
         

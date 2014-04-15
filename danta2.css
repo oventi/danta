@@ -35,6 +35,12 @@ h2, h3 {
     margin-bottom: 1%;
 }
 
+.jumbotron .container {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
 footer {
     font-weight: normal;
     margin-bottom: 0;
