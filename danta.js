@@ -1,102 +1,48 @@
 var danta = {
-    Base: {
-        get_param: function (key) {
-            if(key in this) {
-                return this[key];
-            }
-            else {
-                if(this.element) { // has a jQuery object associated
-                    return this.element.data(key);
-                }
-                
-                return null;
-            }
-        }
+    Base: { _uuid: "danta.Base",
+        _init: function () {}
     },
     
-    adt: { /* abstract data type */
-        List: {
-            _list: null,
-            _get: function () {
-                if(this._list === null) {
-                    this._list = [];
-                }
-                
-                return this._list;
-            },
+    /* implements multiple inheritance */
+    platypus: function (_o) {
+        var o = Object.create(_o);
+        var pool = {};
+        
+        if("_parts" in o) {
+            o._parts.forEach(function (part) { $.extend(pool, danta.platypus(part)); });
+            delete o._parts;
             
-            is_empty: function () {
-                return this._get().length <= 0;
-            },
-            
-            /* prepend: function () {}, */
-            
-            append: function (item, times) {
-                if(arguments.length >=2 ) {
-                    for(var i = 0; i < times; i++) {
-                        this._get().push(item);
-                    }
-                }
-                else {
-                    this._get().push(item);
-                }
-            },
-            
-            concat: function (arr) {
-                this._get();
-                this._list = this._list.concat(arr);
-            },
-            
-            /*
-            head: function () {
-                return this._get()[0];
-            },
-            */
-            /* 
-             * an operation for referring to the list consisting of all the components 
-             * of a list except for its first (this is called the "tail" of the list.)
-             * 
-             * tail: function () {},
-             */
-            
-            size: function () {
-                return this._get().length;
-            },
-            
-            get: function (i) {
-                if(arguments.length == 1) {
-                    return this._get()[i];
-                }
-                
-                return this._get();
-            },
-            
-            set: function (i, item) {
-                var list = this._get();
-                list[i] = item;
-            },
-            
-            empty: function () {
-                delete this._list;
-                this._list = [];
-            },
-            
-            has: function (item) {
-                var has = false;
-                
-                this._list.forEach(function (e, i, a) {
-                    var o1 = JSON.stringify(e);
-                    var o2 = JSON.stringify(item);
-                    
-                    //console.log(o1, o2, o1 === o2);
-                    
-                    if(o1 === o2) {
-                        has = true;
-                    }
-                });
-                
-                return has;
+            return $.extend(pool, o);
+        }
+        else {
+            return o;
+        }
+    },
+    _o: function (_o) {
+        var o = Object.create(_o);
+        if(!("_parts" in o)) { o._parts = []; }
+        
+        o._parts.push(danta.Base);
+        
+        var n = danta.platypus(o);
+        n._init();
+        
+        delete n._parts; // fix, why is it not being deleted in danta.platypus?
+        
+        return n;
+    },
+    
+    cache: {
+        _stack: {},
+        
+        get: function (key) {
+            if(danta.cache._stack[key]) {
+                return danta.cache._stack[key];
             }
+        },
+        
+        set: function (key, value) {
+            danta.cache._stack[key] = value;
         }
     },
     
@@ -111,28 +57,21 @@ var danta = {
         shuffle: function () {
             for(
                 var j, x, i = this.length; i;
-                
                 j = Math.floor(Math.random() * i), 
                 x = this[--i], this[i] = this[j], this[j] = x
             );
 
             return this;
-        }
-    },
-    
-    $: {
-        attach: function (data) {
-            console.log("attaching... ", data);
+        },
+        
+        empty: function() {
+            while (this.length > 0) { this.pop(); }
         }
     },
     
     init_helpers: function () {
-        //Array.prototype.shuffle = danta.Array.shuffle;
-        //Array.prototype = $.extend(Array.prototype, danta.Array);
-        
         $.extend(Array.prototype, danta.Array);
         $.extend(Math, danta.Math);
-        //$.fn.extend(danta.$);
     },
     
     app: function (app) {

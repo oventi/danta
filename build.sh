@@ -12,34 +12,41 @@ touch danta.min.js
 ################################################################################
 
 echo "-- Getting bootstrap css"
-wget "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" -qO bootstrap.min.css
+#wget "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" -qO lib/bootstrap.min.css
 
 echo "-- Getting underscore js"
-wget "http://underscorejs.org/underscore-min.js" -qO underscore.min.js
+#wget "http://underscorejs.org/underscore-min.js" -qO lib/underscore.min.js
 
 echo "-- Getting zepto js"
-wget "http://zeptojs.com/zepto.min.js" -qO zepto.min.js
+#wget "http://zeptojs.com/zepto.min.js" -qO lib/zepto.min.js
 
 ################################################################################
 
 echo "-- Building css"
-cat bootstrap.min.css >> danta.min.css
+cat lib/bootstrap.min.css >> danta.min.css
 cat danta.css >> danta.min.css
 
-echo "-- Building js"
-cat underscore.min.js >> danta.min.js
-cat zepto.min.js >> danta.min.js
+echo '"use strict";' >> danta.min.js
 
-jsmin < danta.js >> danta.min.js
-jsmin < danta.config.js >> danta.min.js
-jsmin < danta.remote.js >> danta.min.js
-jsmin < danta.ui.js >> danta.min.js
-jsmin < danta.ui.behavior.js >> danta.min.js
+echo "-- Building js"
+cat lib/underscore.min.js >> danta.min.js
+cat lib/zepto.min.js >> danta.min.js
+
+cat danta.js >> danta.min.js
+cat config.js >> danta.min.js
+cat remote.js >> danta.min.js
+cat adt.js >> danta.min.js
+cat ui.js >> danta.min.js
+cat ui/behavior.js >> danta.min.js
+cat ui/widget.js >> danta.min.js
+
+#jsmin < danta.min.js >> danta.min.js
+jsmin < danta.min.js > danta2.min.js
 
 ################################################################################
 
-rm -f bootstrap.min.css
-rm -f underscore.min.js
-rm -f zepto.min.js
+#rm -f lib/bootstrap.min.css
+#rm -f lib/underscore.min.js
+#rm -f lib/zepto.min.js
 
 echo "Done"
