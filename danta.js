@@ -1,5 +1,5 @@
 var danta = {
-    Base: { _uuid: "danta.Base",
+    Base: { _id: "danta.Base",
         _init: function () {}
     },
     
@@ -18,16 +18,17 @@ var danta = {
             return o;
         }
     },
-    _o: function (_o) {
+    o: function (_o) {
         var o = Object.create(_o);
-        if(!("_parts" in o)) { o._parts = []; }
         
+        if(!("_parts" in o)) { o._parts = []; }
         o._parts.push(danta.Base);
         
         var n = danta.platypus(o);
-        n._init();
-        
-        delete n._parts; // fix, why is it not being deleted in danta.platypus?
+        n._init(n);
+        if("_parts" in n) {
+            delete n._parts; // fix, why is it not being deleted in danta.platypus?
+        }
         
         return n;
     },

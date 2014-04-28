@@ -1,52 +1,73 @@
 clear
 
+CSS="danta.min.css.tmp"
+JS="danta.min.js.tmp"
+
 echo "Building danta"
 
-echo "-- Cleaning up"
-rm danta.min.css 2> /dev/null
-rm danta.min.js 2> /dev/null
+#echo "-- Cleaning up"
+#rm danta.min.css 2> /dev/null
+#rm danta.min.js 2> /dev/null
 
-touch danta.min.css
-touch danta.min.js
+#touch danta.min.css
+#touch danta.min.js
 
 ################################################################################
 
-echo "-- Getting bootstrap css"
-#wget "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" -qO lib/bootstrap.min.css
+if [ ! -f lib/bootstrap.min.css ]
+    then
+        echo "-- Getting bootstrap css"
+        wget "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" -qO lib/bootstrap.min.css
+fi
 
-echo "-- Getting underscore js"
-#wget "http://underscorejs.org/underscore-min.js" -qO lib/underscore.min.js
+if [ ! -f lib/underscore.min.js ]
+    then
+        echo "-- Getting underscore js"
+        wget "http://underscorejs.org/underscore-min.js" -qO lib/underscore.min.js
+fi
 
-echo "-- Getting zepto js"
-#wget "http://zeptojs.com/zepto.min.js" -qO lib/zepto.min.js
+if [ ! -f lib/zepto.min.js ]
+    then
+        echo "-- Getting zepto js"
+        wget "http://zeptojs.com/zepto.min.js" -qO lib/zepto.min.js
+fi
 
 ################################################################################
 
 echo "-- Building css"
-cat lib/bootstrap.min.css >> danta.min.css
-cat danta.css >> danta.min.css
+cat lib/bootstrap.min.css >> $CSS
+cat danta.css >> $CSS
 
-echo '"use strict";' >> danta.min.js
+echo '"use strict";' >> $JS
 
 echo "-- Building js"
-cat lib/underscore.min.js >> danta.min.js
-cat lib/zepto.min.js >> danta.min.js
+cat lib/underscore.min.js >> $JS
+cat lib/zepto.min.js >> $JS
 
-cat danta.js >> danta.min.js
-cat config.js >> danta.min.js
-cat remote.js >> danta.min.js
-cat adt.js >> danta.min.js
-cat ui.js >> danta.min.js
-cat ui/behavior.js >> danta.min.js
-cat ui/widget.js >> danta.min.js
+cat danta.js >> $JS
+cat config.js >> $JS
+cat remote.js >> $JS
+cat adt.js >> $JS
+cat ui.js >> $JS
+cat ui/behavior.js >> $JS
+cat ui/widget.js >> $JS
 
-#jsmin < danta.min.js >> danta.min.js
-jsmin < danta.min.js > danta2.min.js
-
-################################################################################
-
-#rm -f lib/bootstrap.min.css
-#rm -f lib/underscore.min.js
-#rm -f lib/zepto.min.js
-
-echo "Done"
+if [ "$#" -gt "0" ]
+    then
+        if [ $1 == "--dev" ]
+            then
+                mv danta.min.js.tmp danta.min.js
+                mv danta.min.css.tmp danta.min.css
+                echo "Done"
+            else
+                rm danta.min.js.tmp -f
+                rm danta.min.css.tmp -f
+                echo "ERROR, please try again"
+        fi
+    else
+        jsmin < danta.min.js.tmp > danta.min.js
+        jsmin < danta.min.css.tmp > danta.min.css
+        rm danta.min.js.tmp -f
+        rm danta.min.css.tmp -f
+        echo "Done"
+fi

@@ -1,6 +1,5 @@
 danta.adt = { /* abstract data type */
-    List: {
-        _uuid: "danta.adt.List",
+    List: { _id: "danta.adt.List",
         _init: function () {
             this._items = [];
         },
@@ -12,6 +11,8 @@ danta.adt = { /* abstract data type */
         prepend: function (o) { this._items.unshift(o); },
         append: function (o) { this._items.push(o); },
         concat: function (array) { this._items = this._items.concat(array); },
+        
+        remove: function (i) { this._items.splice(i, 1); },
         
         get: function (i) {
             if(arguments.length == 1) { return this._items[i]; }
@@ -32,19 +33,4 @@ danta.adt = { /* abstract data type */
             return has;
         }
     }
-    
-    /*
-    ,List_Old: {
-        append: function (item, times) {
-            if(arguments.length >=2 ) {
-                for(var i = 0; i < times; i++) {
-                    this._get().push(item);
-                }
-            }
-            else {
-                this._get().push(item);
-            }
-        }
-    }
-    */
 }

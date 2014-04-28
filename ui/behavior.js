@@ -32,33 +32,29 @@ danta.ui.behavior = {
         }
     },
     
-    Clickable: function (o, params) {
-        var clickable = o._behaviors.Clickable(o);
+    clickable: function (o, params) {
+        var affected = $(o._behaviors.clickable, o.element);
         
-        clickable.collection.addClass("behavior_Clickable");
-        
-        clickable.collection.click(function () {
-            params.action($(this));
-        });
+        affected.addClass("clickable");
+        affected.click(function () { params.action($(this)); });
     },
     
-    Selectable: function (o, params) {
-        var selectable = o._behaviors.Selectable(o);
-        var collection = selectable.collection;
+    selectable: function (o, params) {
+        var affected = $(o._behaviors.selectable, o.element);
         var css = {
-            selectable: "behavior_Selectable",
-            selected: "behavior_Selectable_selected"
+            selectable: "selectable",
+            selected: "selectable_selected"
         };
-
-        collection.addClass(css.selectable);
-
+        
+        affected.addClass(css.selectable);
+        
         if(params.multiple) {}
         else { /* single select */
-            collection.click(function () {
-                collection.removeClass(css.selected);
+            affected.click(function () {
+                affected.removeClass(css.selected);
                 $(this).addClass(css.selected);
-
-                selectable.action(params);
+                
+                o.selected = $(this);
             });
         }
     }

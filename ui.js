@@ -2,14 +2,13 @@ danta.ui = {
     
     /* base ui objects ****************************************************** */
     
-    Base: { _uuid: "danta.ui.Base",
+    Base: { _id: "danta.ui.Base",
         _behave: null,
         _behaviors: {},
-        
         _attach_behaviors: function () {
             this._behave = this._behave || [];
             
-            this._behave.forEach(function (e, i, a) {
+            this._behave.forEach(function (e) {
                 var behavior = danta.ui.behavior[e.behavior];
                 behavior(this, e.params);
             }, this);
@@ -25,30 +24,17 @@ danta.ui = {
         
         behave: function (behavior, params) {
             this._behave = this._behave || [];
-            if(typeof params === "undefined") {
-                params = {};
-            }
+            if(typeof params === "undefined") { params = {}; }
             
             if(this._behaviors[behavior]) {
                 this._behave.push({ behavior: behavior, params: params });
             }
             else {
-                throw this.id + " cannot behave " + behavior;
+                throw this._id + " cannot behave " + behavior;
             }
         },
         
-        render: function () {
-            var dl = $("<dl />").addClass("default");
-            
-            for(var i in this) {
-                if(this.hasOwnProperty(i) && typeof this[i] !== "function") {
-                    dl.append("<dt>" + i + "</dt>");
-                    dl.append("<dd>" + this[i] + "</dd>");
-                }
-            }
-            
-            this.element.append(dl);
-        },
+        render: function () {},
         
         hide: function () { this.element.hide(); },
         show: function () { this.element.show(); }
@@ -72,8 +58,20 @@ danta.ui = {
                     
                     o._parts.push(danta.ui.Base);
                     
-                    var wo = danta._o(o);
+                    var wo = danta.o(o);
                     wo.element = jo.addClass("widget");
+                    
+                    if("_methods" in wo) {
+                        return new Proxy(wo, {
+                            get: function (proxy, name) {
+                                if(name in proxy._methods) {
+                                    return function () { proxy._methods._get(wo, name, arguments); }
+                                }
+                                
+                                return proxy[name];
+                            }
+                        });
+                    }
                     
                     return wo;
                 }
@@ -135,7 +133,7 @@ danta.ui = {
             var widget_id = $(this).attr("id");
             var widget = danta.ui._make_widget(widget_id);
             
-            if(widget.get_param("autorender") === "yes") {
+            if(!(widget.get_param("render") === "no" || widget.get_param("render") === "false")) {
                 widget.render();
             }
             
