@@ -26,15 +26,17 @@ danta.ui = {
             this._behave = this._behave || [];
             if(typeof params === "undefined") { params = {}; }
             
-            if(this._behaviors[behavior]) {
+            if(behavior in this._behaviors) {
                 this._behave.push({ behavior: behavior, params: params });
             }
             else {
                 throw this._id + " cannot behave " + behavior;
             }
+            
+            this.render();
         },
         
-        render: function () {},
+        _render: function () {},
         
         hide: function () { this.element.hide(); },
         show: function () { this.element.show(); }
@@ -62,7 +64,7 @@ danta.ui = {
                     wo.element = jo.addClass("widget");
                     
                     if("_methods" in wo) {
-                        return new Proxy(wo, {
+                        wo = new Proxy(wo, {
                             get: function (proxy, name) {
                                 if(name in proxy._methods) {
                                     return function () { proxy._methods._get(wo, name, arguments); }
@@ -73,12 +75,26 @@ danta.ui = {
                         });
                     }
                     
+                    if(!("_render" in wo)) {
+                        var ex = "danta.ui._make_widget: ";
+                        ex += wo._id + " needs to have a _render method";
+                        
+                        throw ex;
+                    }
+                    else {
+                        wo.render = function () {
+                            wo.element.empty();
+                            wo._render();
+                            wo._attach_behaviors();
+                        }
+                    }
+                    
                     return wo;
                 }
             }
         }
         
-        throw "danta.ui.widget._make: error";
+        throw "danta.ui._make_widget: error";
     },
     
     _autoload: function () { /* Using Bootstrap for default layout */
