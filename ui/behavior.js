@@ -1,7 +1,23 @@
 danta.ui.behavior = {
-    Progressable: function (o, params) {
+    _get_affected: function (o, b) {
+        var selector = o._behaviors[b];
+        var affected = null;
+        
+        if(selector === null) {
+            affected = o.element.children().first();
+        }
+        else {
+            affected = $(selector, o.element);
+        }
+        
+        //affected.off();
+        
+        return affected;
+    },
+    
+    progressable: function (o) {
         if($(".progress", o.element).length <= 0) {
-            o.element.addClass("behavior_Progressable");
+            o.element.addClass("progressable");
             
             o.start_progress = function () { $(".progress", o.element).show(); }
             o.stop_progress  = function () { $(".progress", o.element).hide(); }
@@ -11,40 +27,34 @@ danta.ui.behavior = {
         }
     },
     
-    Typeable: function (o, params) {
+    typeable: function (o, params) { /* should really fix this, does not make much sense */
         /*
-        altGraphKey: false
-        altKey: false
-        charCode: 0
-        ctrlKey: false
-        keyCode: 8
-        metaKey: false
-        shiftKey: false
-        which: 8               
+        altGraphKey: false | altKey: false | charCode: 0
+        ctrlKey: false | keyCode: 8 | metaKey: false
+        shiftKey: false | which: 8
         */
         
-        var typeable = o._behaviors.Typeable(o);
+        var affected = danta.ui.behavior._get_affected(o, "typeable");
         
-        typeable.collection.addClass("behavior_Typeable");
-        
+        affected.addClass("typeable");
         if(params.delay && params.action) {
-            typeable.collection.keydown(_.debounce(params.action, params.delay));
+            affected.keydown(_.debounce(params.action, params.delay));
+        }
+        else if(!params.delay && params.action) {
+            affected.keydown(params.action);
         }
     },
     
     clickable: function (o, params) {
-        var affected = $(o._behaviors.clickable, o.element);
+        var affected = danta.ui.behavior._get_affected(o, "clickable");
         
         affected.addClass("clickable");
         affected.click(function () { params.action($(this)); });
     },
     
     selectable: function (o, params) {
-        var affected = $(o._behaviors.selectable, o.element);
-        var css = {
-            selectable: "selectable",
-            selected: "selectable_selected"
-        };
+        var affected = danta.ui.behavior._get_affected(o, "selectable");
+        var css = { selectable: "selectable", selected: "selectable_selected" };
         
         affected.addClass(css.selectable);
         

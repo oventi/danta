@@ -46,8 +46,23 @@ danta.ui = {
     
     /* ui functions ********************************************************* */
     
-    _make_widget: function (id) {
-        var jo = $("#" + id);
+    _widget: function (type, data) {
+        var container = $("<div/>").attr("id", _.uniqueId(type));
+        container.data("widget", type);
+        
+        for(var key in data) {
+            var value = data[key];
+            container.data(key, value);
+        }
+        
+        var widget = danta.ui._make_widget(container);
+        widget.render();
+        
+        return widget;
+    },
+    
+    _make_widget: function (jo) {
+        //var jo = $("#" + id);
         
         if(jo.length > 0) {
             var data = jo[0].dataset;
@@ -64,6 +79,8 @@ danta.ui = {
                     wo.element = jo.addClass("widget");
                     
                     if("_methods" in wo) {
+                        // until Proxy is a standard this functionality is disabled
+                        /*
                         wo = new Proxy(wo, {
                             get: function (proxy, name) {
                                 if(name in proxy._methods) {
@@ -73,19 +90,22 @@ danta.ui = {
                                 return proxy[name];
                             }
                         });
+                        */
                     }
                     
-                    if(!("_render" in wo)) {
+                    if(!("_render" in wo) && !("render" in wo)) {
                         var ex = "danta.ui._make_widget: ";
-                        ex += wo._id + " needs to have a _render method";
+                        ex += wo._id + " needs to have a _render/render method";
                         
                         throw ex;
                     }
                     else {
-                        wo.render = function () {
-                            wo.element.empty();
-                            wo._render();
-                            wo._attach_behaviors();
+                        if(!("render" in wo)) {
+                            wo.render = function () {
+                                wo.element.empty();
+                                wo._render();
+                                wo._attach_behaviors();
+                            }
                         }
                     }
                     
@@ -147,7 +167,7 @@ danta.ui = {
         var widgets = {};
         $("[data-widget]").each(function () {
             var widget_id = $(this).attr("id");
-            var widget = danta.ui._make_widget(widget_id);
+            var widget = danta.ui._make_widget($(this));
             
             if(!(widget.get_param("render") === "no" || widget.get_param("render") === "false")) {
                 widget.render();

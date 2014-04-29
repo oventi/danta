@@ -4,7 +4,7 @@
     font-family: "Ubuntu";
     font-style: normal;
     font-weight: 400;
-    src: local('Ubuntu'), url(ubuntu.woff) format('woff');
+    src: local('Ubuntu'), url(fonts/ubuntu.woff) format('woff');
 }
 
 /* Fonts ******************************************************************** */
@@ -51,6 +51,7 @@ footer {
 
 .widget {
     position: relative;
+    overflow: hidden;
 }
 
 .widget:after {
@@ -61,11 +62,16 @@ footer {
     visibility: hidden;
 }
 
+div[data-widget="Group"] > div.widget {
+    float: left;
+}
+
+div[data-widget="List"] > ul {
+    margin-bottom: 0;
+}
+
 /* Behaviors **************************************************************** */
 
-.selectable {
-    /*cursor: pointer;*/
-}
 .selectable_selected {
     background: #ddd;
 }

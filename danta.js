@@ -82,9 +82,14 @@ var danta = {
             var fn = function () {} // TODO: make $w() create widgets and $w.x reference them
             
             // autoloading ui/widgets
-            var ui = danta.ui._autoload();
+            var al = danta.ui._autoload();
             
-            var _app = new app(danta, ui.widgets);
+            var widget = danta.ui._widget;
+            for(var w in al.widgets) {
+                widget[w] = al.widgets[w];
+            }
+            
+            var _app = new app(danta, widget);
             danta.caller = _app;
             
             _app.init();
