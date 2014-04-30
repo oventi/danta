@@ -39,89 +39,109 @@ danta.ui = {
         _render: function () {},
         
         hide: function () { this.element.hide(); },
-        show: function () { this.element.show(); }
+        show: function () { this.element.show(); },
+        append: function (o) {
+            if("element" in o) { o = o.element; }
+            this.element.append(o);
+        }
     },
     
     /* user ui objects ****************************************************** */
     
     /* ui functions ********************************************************* */
     
-    _widget: function (type, data) {
-        var container = $("<div/>").attr("id", _.uniqueId(type));
-        container.data("widget", type);
+    w: function (o, data) {
+        var jo = null;
+        var proto = null;
         
-        for(var key in data) {
-            var value = data[key];
-            container.data(key, value);
+        if($.zepto.isZ(o)) { // danta widget from html declaration
+            if(o.data("widget") in danta.ui.widget) {
+                jo = o;
+                proto = danta.ui.widget[o.data("widget")];
+            }
+        }
+        else {
+            if(typeof o === "string" && o in danta.ui.widget) { // danta widget from js
+                jo = $("<div/>").attr("id", _.uniqueId("widget"));
+                jo.data("widget", o);
+                proto = danta.ui.widget[o];
+            }
+            if(typeof o === "object") { // custom widget from js
+                jo = $("<div/>").attr("id", _.uniqueId("widget"));
+                jo.data("widget", "Custom");
+                proto = o;
+            }
         }
         
-        var widget = danta.ui._make_widget(container);
-        widget.render();
-        
-        return widget;
+        if(jo === null || jo.length <= 0) {
+            console.log(o, data);
+            throw "danta.ui._widget: cannot create widget";
+        }
+        else {
+            if(data instanceof Object) {
+                for(var key in data) {
+                    var value = data[key];
+                    jo.data(key, value);
+                }
+            }
+            
+            return danta.ui._make_widget(jo, proto);
+        }
     },
     
-    _make_widget: function (jo) {
-        //var jo = $("#" + id);
+    _make_widget: function (jo, proto) { // jo: Zepto/jQuery object
+        var o = Object.create(proto);
+        if(!("_parts" in o)) { o._parts = []; }
         
-        if(jo.length > 0) {
-            var data = jo[0].dataset;
+        o._parts.push(danta.ui.Base);
+        
+        var wo = danta.o(o);
+        wo.element = jo.addClass("widget");
+        
+        /*
+            * until Proxy is a standard this functionality is disabled
+            * 
+        if("_methods" in wo) {
+            wo = new Proxy(wo, {
+                get: function (proxy, name) {
+                    if(name in proxy._methods) {
+                        return function () { proxy._methods._get(wo, name, arguments); }
+                    }
+
+                    return proxy[name];
+                }
+            });
+
+        }
+        */
+        
+        if(!("_render" in wo) && !("render" in wo)) {
+            var ex = "danta.ui._make_widget: ";
+            ex += wo._id + " needs to have a _render/render method";
             
-            if(data.widget) {
-                var to = danta.ui.widget[data.widget];
-                if(typeof to === "object") {
-                    var o = Object.create(to);
-                    if(!("_parts" in o)) { o._parts = []; }
-                    
-                    o._parts.push(danta.ui.Base);
-                    
-                    var wo = danta.o(o);
-                    wo.element = jo.addClass("widget");
-                    
-                    if("_methods" in wo) {
-                        // until Proxy is a standard this functionality is disabled
-                        /*
-                        wo = new Proxy(wo, {
-                            get: function (proxy, name) {
-                                if(name in proxy._methods) {
-                                    return function () { proxy._methods._get(wo, name, arguments); }
-                                }
-                                
-                                return proxy[name];
-                            }
-                        });
-                        */
-                    }
-                    
-                    if(!("_render" in wo) && !("render" in wo)) {
-                        var ex = "danta.ui._make_widget: ";
-                        ex += wo._id + " needs to have a _render/render method";
-                        
-                        throw ex;
-                    }
-                    else {
-                        if(!("render" in wo)) {
-                            wo.render = function () {
-                                wo.element.empty();
-                                wo._render();
-                                wo._attach_behaviors();
-                            }
-                        }
-                    }
-                    
-                    return wo;
+            throw ex;
+            return null;
+        }
+        else {
+            if(!("render" in wo)) {
+                wo.render = function () {
+                    wo.element.empty();
+                    wo._render();
+                    wo._attach_behaviors();
                 }
             }
         }
         
-        throw "danta.ui._make_widget: error";
+        var render = wo.get_param("render");
+        if(render === undefined) { wo.render(); }
+        else { if(render) { wo.render(); } }
+        
+        return wo;
     },
     
     _autoload: function () { /* Using Bootstrap for default layout */
         var container = null;
         var row = null;
-        
-        // @TODO: how should the header and footer be styled?
         
         if(!$("body").hasClass("no_autoload")) {
             container = $("<div />").addClass("container-fluid");
@@ -167,14 +187,7 @@ danta.ui = {
         var widgets = {};
         $("[data-widget]").each(function () {
             var widget_id = $(this).attr("id");
-            var widget = danta.ui._make_widget($(this));
-            
-            if(!(widget.get_param("render") === "no" || widget.get_param("render") === "false")) {
-                widget.render();
-            }
-            
-            widget.id = widget_id;
-            widgets[widget_id] = widget;
+            widgets[widget_id] = danta.ui.w($(this));
         });
         
         return { widgets: widgets };

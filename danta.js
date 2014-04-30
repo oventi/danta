@@ -47,51 +47,20 @@ var danta = {
         }
     },
     
-    Math: {
-        get_random_int: function (min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-    },
-    
-    Array: {
-        // http://stackoverflow.com/a/10142256
-        shuffle: function () {
-            for(
-                var j, x, i = this.length; i;
-                j = Math.floor(Math.random() * i), 
-                x = this[--i], this[i] = this[j], this[j] = x
-            );
-
-            return this;
-        },
-        
-        empty: function() {
-            while (this.length > 0) { this.pop(); }
-        }
-    },
-    
-    init_helpers: function () {
-        $.extend(Array.prototype, danta.Array);
-        $.extend(Math, danta.Math);
-    },
-    
     app: function (app) {
-        this.init_helpers();
+        this.helper.init();
         
         $(document).ready(function () {
-            var fn = function () {} // TODO: make $w() create widgets and $w.x reference them
+            /* autoloading ui/widgets */
+            var autoload = danta.ui._autoload();
             
-            // autoloading ui/widgets
-            var al = danta.ui._autoload();
+            /* 
+             * $w.x: access declared widgets html
+             * $w(): creates widget
+             */
+            var wrapper = danta.ui.widget.wrapper(autoload);
             
-            var widget = danta.ui._widget;
-            for(var w in al.widgets) {
-                widget[w] = al.widgets[w];
-            }
-            
-            var _app = new app(danta, widget);
-            danta.caller = _app;
-            
+            var _app = new app(danta, wrapper);
             _app.init();
         });
     }

@@ -45,6 +45,8 @@ cat lib/underscore.min.js >> $JS
 cat lib/zepto.min.js >> $JS
 
 cat danta.js >> $JS
+cat helper.js >> $JS
+cat cache.js >> $JS
 cat config.js >> $JS
 cat remote.js >> $JS
 cat adt.js >> $JS

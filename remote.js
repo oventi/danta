@@ -3,4 +3,4 @@ danta.remote = {
         params["fn"] = fn;
         $.post(danta.config.REMOTE_BASE_PATH, params, done, "json");
     }
-}
+};
