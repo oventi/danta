@@ -79,12 +79,11 @@ danta.ui.widget = {
                 this._items.forEach(function (e) {
                     var item = $("<li />").addClass("list-group-item");
                     
-                    if(typeof e === "object") {
+                    if(typeof e === "object" && "render" in e) {
                         e.element = item;
                         e.render();
-                        //item.append(e.element);
                     }
-                    else { item.append(e); }
+                    else { item.append(String(e)); }
                     
                     ul.append(item);
                 });

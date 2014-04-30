@@ -68,7 +68,8 @@ if [ "$#" -gt "0" ]
         fi
     else
         jsmin < danta.min.js.tmp > danta.min.js
-        jsmin < danta.min.css.tmp > danta.min.css
+        #jsmin < danta.min.css.tmp > danta.min.css
+        cat danta.min.css.tmp > danta.min.css
         rm danta.min.js.tmp -f
         rm danta.min.css.tmp -f
         echo "Done"
