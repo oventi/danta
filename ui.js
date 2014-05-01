@@ -1,8 +1,5 @@
 danta.ui = {
-    
-    /* base ui objects ****************************************************** */
-    
-    Base: { _id: "danta.ui.Base",
+    Base: { _type: "danta.ui.Base",
         _behave: null,
         _behaviors: {},
         _attach_behaviors: function () {

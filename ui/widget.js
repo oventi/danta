@@ -1,5 +1,5 @@
 danta.ui.widget = {
-    Group: { _id: "danta.ui.widget.Group",
+    Group: { _type: "danta.ui.widget.Group",
         render: function () {
             var items = this.element.children();
             var width = 100 / items.length;
@@ -8,7 +8,18 @@ danta.ui.widget = {
         }
     },
     
-    Textbox: { _id: "danta.ui.widget.Textbox",
+    Label: { _type: "danta.ui.widget.Label",
+        text: "",
+        
+        _render: function () {
+            if(String(this.get_param("text")) !== "") {
+                var span = $('<span class="label label-default">');
+                this.element.append(span.text(this.get_param("text")));
+            }
+        }
+    },
+    
+    Textbox: { _type: "danta.ui.widget.Textbox",
         _behaviors: { typeable: "input", progressable: null },
         
         value: function () {
@@ -24,7 +35,7 @@ danta.ui.widget = {
         }
     },
     
-    Button: { _id: "danta.ui.widget.Button",
+    Button: { _type: "danta.ui.widget.Button",
         click: function (fn) {
             $("button", this.element).off();
             $("button", this.element).click(fn);
@@ -46,7 +57,7 @@ danta.ui.widget = {
         }
     },
     
-    List: { _id: "danta.ui.widget.List",
+    List: { _type: "danta.ui.widget.List",
         _parts: [danta.adt.List],
         /*_methods: {
             append: function (o, list) { list._items.push(o); },
@@ -194,7 +205,7 @@ danta.ui.widget = {
         }
     },
     
-    View: { _id: "danta.ui.widget.View",
+    View: { _type: "danta.ui.widget.View",
         _behaviors: { progressable: null },
         _data: null,
 

@@ -5,12 +5,7 @@ JS="danta.min.js.tmp"
 
 echo "Building danta"
 
-#echo "-- Cleaning up"
-#rm danta.min.css 2> /dev/null
-#rm danta.min.js 2> /dev/null
-
-#touch danta.min.css
-#touch danta.min.js
+mkdir lib 2> /dev/null
 
 ################################################################################
 

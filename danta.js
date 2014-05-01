@@ -1,5 +1,5 @@
 var danta = {
-    Base: { _id: "danta.Base",
+    Base: { _type: "danta.Base",
         _init: function () {}
     },
     
