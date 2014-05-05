@@ -47,7 +47,7 @@ danta.ui = {
     
     /* ui functions ********************************************************* */
     
-    w: function (o, data) {
+    w: function (o, data, properties) {
         var jo = null;
         var proto = null;
         
@@ -82,22 +82,23 @@ danta.ui = {
                 }
             }
             
-            return danta.ui._make_widget(jo, proto);
+            return danta.ui._make_widget(jo, proto, properties);
         }
     },
     
-    _make_widget: function (jo, proto) { // jo: Zepto/jQuery object
+    _make_widget: function (jo, proto, properties) { // jo: Zepto/jQuery object
         var o = Object.create(proto);
         if(!("_parts" in o)) { o._parts = []; }
         
         o._parts.push(danta.ui.Base);
         
-        var wo = danta.o(o);
+        var wo = danta.o(o, properties);
         wo.element = jo.addClass("widget");
         
         /*
-            * until Proxy is a standard this functionality is disabled
-            * 
+         * until Proxy is a standard this functionality is disabled
+         */
+        /*
         if("_methods" in wo) {
             wo = new Proxy(wo, {
                 get: function (proxy, name) {

@@ -1,5 +1,5 @@
 danta.adt = { /* abstract data type */
-    List: { _id: "danta.adt.List",
+    List: { _type: "danta.adt.List",
         _init: function () {
             this._items = [];
         },
