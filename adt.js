@@ -33,4 +33,4 @@ danta.adt = { /* abstract data type */
             return has;
         }
     }
-}
+};

@@ -53,4 +53,4 @@ var danta = {
             _app.init();
         });
     }
-}
+};
