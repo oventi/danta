@@ -46,6 +46,7 @@ cat config.js >> $JS
 cat remote.js >> $JS
 cat adt.js >> $JS
 cat ui.js >> $JS
+cat data.js >> $JS
 cat ui/behavior.js >> $JS
 cat ui/widget.js >> $JS
 

@@ -1,19 +1,6 @@
 var danta = {
     Base: { _type: "danta.Base",
-        _init: function () {},
-        get_dto: function () {
-            /* if the object is a Ui widget */
-            if("element" in this) { delete this.element; }
-            
-            var dto = JSON.parse(JSON.stringify(this));
-            for(var i in dto) { if(i.indexOf("_") !== -1) { delete dto[i]; } }
-            
-            return dto;
-        },
-        
-        serialize: function () {
-            return JSON.stringify(this.get_dto());
-        }
+        _init: function () {}
     },
     
     /* implements multiple inheritance */
@@ -39,6 +26,7 @@ var danta = {
         
         var n = danta.platypus(o);
         if(typeof properties === "object") { $.extend(n, properties); }
+        n._is_danta_object = true;
         n._init(n);
         
         if("_parts" in n) {
@@ -46,54 +34,6 @@ var danta = {
         }
         
         return n;
-    },
-    
-    data: {
-        Store: { _type: "danta.data.Store",
-            id: "danta.data.Store",
-            data: null,
-            autosave: false,
-            
-            get_data: function () {
-                return this.data.get();
-            },
-            
-            put: function (o) {
-                var dto = null;
-                
-                if("get_dto" in o && typeof o.get_dto === "function") {
-                    dto = o.get_dto();
-                }
-                else {
-                    dto = o;
-                }
-                
-                this.data.append(dto);
-                
-                if(this.autosave) { this.save(); }
-            },
-            
-            remove: function (o) {
-                this.data.get().forEach(function (item, i, items) {
-                    if(JSON.stringify(item) === o.serialize()) { items.splice(i, 1); }
-                });
-                
-                if(this.autosave) { this.save(); }
-            },
-            
-            save: function () {
-                delete localStorage[this.id];
-                localStorage[this.id] = JSON.stringify(this.data.get());
-            },
-            
-            _init: function () {
-                this.data = danta.o(danta.adt.List);
-                
-                if(localStorage[this.id]) {
-                    this.data.concat(JSON.parse(localStorage[this.id]));
-                }
-            }
-        }
     },
     
     app: function (app) {

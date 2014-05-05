@@ -94,6 +94,7 @@ danta.ui = {
         
         var wo = danta.o(o, properties);
         wo.element = jo.addClass("widget");
+        wo._is_danta_widget = true;
         
         /*
          * until Proxy is a standard this functionality is disabled
