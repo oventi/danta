@@ -17,8 +17,8 @@
 
 body {
     overflow: auto;
-    margin-top: 45px !important;
-    margin-bottom: 45px !important;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 header, footer {
@@ -51,6 +51,7 @@ h2, h3 {
 
 .jumbotron {
     margin-bottom: 1%;
+    padding: 5px 10px;
 }
 
 .jumbotron .container {
@@ -127,7 +128,7 @@ div[data-widget="List"] > ul {
     section { margin-bottom: 1%; }
     section:last-child { margin-bottom: 0; }
     
-    footer { margin-top: 1%; }
+    footer { margin-top: 1%; padding-top: 12px; }
 }
 
 /* Small devices */
