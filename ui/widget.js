@@ -22,9 +22,9 @@ danta.ui.widget = {
     Textbox: { _type: "danta.ui.widget.Textbox",
         _behaviors: { typeable: "input", progressable: null },
         
-        value: function () {
-            return $("input", this.element).val();
-        },
+        blur: function () { $("input", this.element).blur(); },
+        clear: function () { $("input", this.element).val(""); },
+        value: function () { return $("input", this.element).val(); },
         
         _render: function () {
             var label = this.get_param("label") || "";
