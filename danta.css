@@ -15,16 +15,34 @@
 
 /* Layout ******************************************************************* */
 
+body {
+    overflow: auto;
+    margin-top: 45px !important;
+    margin-bottom: 45px !important;
+}
+
 header, footer {
-    background: #eee;
-    padding: 1%;
+    background: #333;
+    color: #ccc;
+    padding: 0;
     font-weight: bold;
     margin: 0;
-    margin-bottom: 1%;
+    position: fixed !important;
+    height: 40px;
+    z-index: 999;
+    overflow: hidden;
 }
+
+header {
+    top: 0;
+}
+
 header h1 {
     margin: 0;
     text-align: center;
+    font-size: 1.5em;
+    height: 40px;
+    line-height: 40px !important;
 }
 
 h2, h3 {
@@ -45,6 +63,8 @@ footer {
     font-weight: normal;
     margin-bottom: 0;
     text-align: center;
+    bottom: 0;
+    padding-top: 10px;
 }
 
 /* UI / Widgets ************************************************************* */
