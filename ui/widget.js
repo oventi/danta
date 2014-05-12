@@ -12,9 +12,9 @@ danta.ui.widget = {
         text: "",
         
         _render: function () {
-            if(String(this.get_param("text")) !== "") {
+            if(String(this.text) !== "") {
                 var span = $('<span class="label label-default">');
-                this.element.append(span.text(this.get_param("text")));
+                this.element.append(span.text(this.text));
             }
         }
     },
@@ -27,7 +27,7 @@ danta.ui.widget = {
         value: function () { return $("input", this.element).val(); },
         
         _render: function () {
-            var label = this.get_param("label") || "";
+            var label = this.label || "";
             var textbox = $('<input type="text" />').addClass("form-control");
             textbox.attr("placeholder", label);
             
@@ -44,12 +44,12 @@ danta.ui.widget = {
         _render: function () {
             var button = $("<button />").addClass("btn btn-default");
             
-            if(!this.get_param("icon")) {
-                button.text(this.get_param("label"));
+            if(!this.icon) {
+                button.text(this.label);
             }
             else {
                 var icon = $('<span class="glyphicon"></span>');
-                icon.addClass("glyphicon-" + this.get_param("icon"));
+                icon.addClass("glyphicon-" + this.icon);
                 button.append(icon);
             }
             
@@ -70,13 +70,25 @@ danta.ui.widget = {
             }
         },*/
         
-        append: function (o) { this._items.push(o); this.render(); },
-        concat: function (array) { this._items = this._items.concat(array); this.render(); },
-        remove: function (i) { this._items.splice(i, 1); this.render(); },
+        append: function (o) {
+            this._items.push(o); 
+            this.trigger("change");
+        },
+        concat: function (array) { 
+            this._items = this._items.concat(array); 
+            this.trigger("change");
+        },
+        remove: function (i) { 
+            this._items.splice(i, 1); 
+            this.trigger("change");
+        },
         
         _behaviors: { clickable: "ul > li", selectable: "ul > li" },
         _init: function () {
             this._items = []; // code repetition from danta.adt.List
+            
+            var that = this;
+            this.on("change", function () { that.render() });
         },
         
         /* ****************************************************************** */
@@ -125,7 +137,7 @@ danta.ui.widget = {
         },
 
         render: function () {
-            var label = this.get_param("label") || "";
+            var label = this.label || "";
             var textbox = $('<input type="text" />').addClass("form-control");
             //textbox.attr("placeholder", label);
 

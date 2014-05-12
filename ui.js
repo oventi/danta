@@ -40,16 +40,21 @@ danta.ui = {
         append: function (o) {
             if("element" in o) { o = o.element; }
             this.element.append(o);
-        }
+        },
+        
+        on: function (ev, fn) { this.element.on(ev, fn); },
+        trigger: function (ev) { this.element.trigger(ev); }
     },
     
     /* user ui objects ****************************************************** */
     
     /* ui functions ********************************************************* */
     
-    w: function (o, data, properties) {
+    w: function (o, properties) {
         var jo = null;
         var proto = null;
+        
+        if(typeof properties !== "object") { properties = {}; }
         
         if($.zepto.isZ(o)) { // danta widget from html declaration
             if(o.data("widget") in danta.ui.widget) {
@@ -71,30 +76,29 @@ danta.ui = {
         }
         
         if(jo === null || jo.length <= 0) {
-            console.log(o, data);
+            console.log(o, properties);
             throw "danta.ui._widget: cannot create widget";
+            return false;
         }
         else {
-            if(data instanceof Object) {
-                for(var key in data) {
-                    var value = data[key];
-                    jo.data(key, value);
-                }
-            }
+            jo.addClass("widget");
             
-            return danta.ui._make_widget(jo, proto, properties);
+            _.extend(properties, jo[0].dataset);
+            delete properties["widget"];
         }
+        
+        return danta.ui._make_widget(jo, proto, properties);
     },
     
     _make_widget: function (jo, proto, properties) { // jo: Zepto/jQuery object
         var o = Object.create(proto);
-        if(!("_parts" in o)) { o._parts = []; }
         
+        if(!("_parts" in o)) { o._parts = []; }
         o._parts.push(danta.ui.Base);
         
+        _.extend(properties, { element: jo, _is_danta_widget: true });
+        
         var wo = danta.o(o, properties);
-        wo.element = jo.addClass("widget");
-        wo._is_danta_widget = true;
         
         /*
          * until Proxy is a standard this functionality is disabled
@@ -131,9 +135,9 @@ danta.ui = {
             }
         }
         
-        var render = wo.get_param("render");
-        if(render === undefined) { wo.render(); }
-        else { if(render) { wo.render(); } }
+        wo.render();
+        //if(wo.render === undefined) { wo.render(); }
+        //else { if(wo.render) { wo.render(); } }
         
         return wo;
     },
