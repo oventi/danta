@@ -59,6 +59,7 @@ danta.ui.widget = {
     
     List: { _type: "danta.ui.widget.List",
         _parts: [danta.adt.List],
+        store: null,
         /*_methods: {
             append: function (o, list) { list._items.push(o); },
             concat: function (array, list) { list._items = list._items.concat(array); },
@@ -71,7 +72,7 @@ danta.ui.widget = {
         },*/
         
         append: function (o) {
-            this._items.push(o); 
+            this._items.push(o);
             this.trigger("change");
         },
         concat: function (array) { 
@@ -86,9 +87,23 @@ danta.ui.widget = {
         _behaviors: { clickable: "ul > li", selectable: "ul > li" },
         _init: function () {
             this._items = []; // code repetition from danta.adt.List
-            
             var that = this;
-            this.on("change", function () { that.render() });
+            
+            if(this.store !== null) {
+                this.store = danta.o(danta.data.Store, {id: this.store});
+                
+                this.store.find().forEach(function (o) {
+                    that._items.push(o);
+                });
+            }
+            
+            this.on("change", function () {
+                that.render();
+                if(that.store !== null) {
+                    that.store.remove({});
+                    that.get().forEach(function (e) { that.store.insert(e); });
+                }
+            });
         },
         
         /* ****************************************************************** */
@@ -106,7 +121,7 @@ danta.ui.widget = {
                         e.element = item;
                         e.render();
                     }
-                    else { item.append(String(e)); }
+                    else { item.append(danta.helper.string(e)); }
                     
                     ul.append(item);
                 });
