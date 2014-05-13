@@ -38,7 +38,7 @@ danta.ui = {
         hide: function () { this.element.hide(); },
         show: function () { this.element.show(); },
         append: function (o) {
-            if("element" in o) { o = o.element; }
+            if(typeof o === "object" && "element" in o) { o = o.element; }
             this.element.append(o);
         },
         
@@ -120,7 +120,7 @@ danta.ui = {
         
         if(!("_render" in wo) && !("render" in wo)) {
             var ex = "danta.ui._make_widget: ";
-            ex += wo._id + " needs to have a _render/render method";
+            ex += wo._id + " needs to have a render method";
             
             throw ex;
             return null;
@@ -136,8 +136,6 @@ danta.ui = {
         }
         
         wo.render();
-        //if(wo.render === undefined) { wo.render(); }
-        //else { if(wo.render) { wo.render(); } }
         
         return wo;
     },
@@ -151,7 +149,6 @@ danta.ui = {
             
             row = $('<div class="row"></div>');
             
-            //$("header").addClass("page-header");
             $("header").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
             
             row.append($("header").detach());
