@@ -21,6 +21,14 @@ danta.helper = {
         }
     },
     
+    string: function (o) {
+        if(typeof o === "object" && !("toString" in o)) {
+            return JSON.stringify(o);
+        }
+        
+        return String(o);
+    },
+    
     init: function () {
         $.extend(Array.prototype, danta.helper.Array);
         $.extend(Math, danta.helper.Math);
