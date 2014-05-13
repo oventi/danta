@@ -56,14 +56,4 @@ danta.data = {
             return o;
         }
     }
-    
-    /*serialize: function (o) {
-        // if the object is a Ui widget
-        if("element" in o) { delete o.element; }
-        
-        var o = JSON.parse(JSON.stringify(o));
-        for(var i in o) { if(i.indexOf("_") !== -1) { delete o[i]; } }
-        
-        return JSON.stringify(o);
-    }*/
 };
