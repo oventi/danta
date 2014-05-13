@@ -60,6 +60,8 @@ danta.ui.widget = {
     List: { _type: "danta.ui.widget.List",
         _parts: [danta.adt.List],
         store: null,
+        type: null,
+        
         /*_methods: {
             append: function (o, list) { list._items.push(o); },
             concat: function (array, list) { list._items = list._items.concat(array); },
@@ -90,11 +92,18 @@ danta.ui.widget = {
             var that = this;
             
             if(this.store !== null) {
-                this.store = danta.o(danta.data.Store, {id: this.store});
+                this.store = danta.o(danta.data.Store, { id: this.store });
                 
                 this.store.find().forEach(function (o) {
-                    that._items.push(o);
-                });
+                    if(this.type) {
+                        var proto = eval(this.type);
+                        var item = danta.ui.w(proto, o);
+                        this._items.push(item);
+                    }
+                    else {
+                        this._items.push(o);
+                    }
+                }, this);
             }
             
             this.on("change", function () {
