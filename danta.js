@@ -40,16 +40,11 @@ var danta = {
         this.helper.init();
         
         $(document).ready(function () {
-            /* autoloading ui/widgets */
-            var autoload = danta.ui._autoload();
+            /* setting the layout and loading widgets */
+            danta.ui.set_layout();
+            danta.ui.load_widgets();
             
-            /* 
-             * $w.x: access declared widgets html
-             * $w(): creates widget
-             */
-            var wrapper = danta.ui.widget.wrapper(autoload);
-            
-            var _app = new app(danta, wrapper);
+            var _app = new app();
             _app.init();
         });
     }

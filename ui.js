@@ -11,14 +11,6 @@ danta.ui = {
             }, this);
         },
         
-        get_param: function (key) {
-            if(this.element) { // element: associated jQuery object
-                return this.element.data(key);
-            }
-            
-            return this.element[key];
-        },
-        
         behave: function (behavior, params) {
             this._behave = this._behave || [];
             if(typeof params === "undefined") { params = {}; }
@@ -97,7 +89,6 @@ danta.ui = {
         o._parts.push(danta.ui.Base);
         
         _.extend(properties, { element: jo, _is_danta_widget: true });
-        
         var wo = danta.o(o, properties);
         
         /*
@@ -140,56 +131,56 @@ danta.ui = {
         return wo;
     },
     
-    _autoload: function () { /* Using Bootstrap for default layout */
+    set_layout: function () { /* Using Bootstrap for default layout */
         var container = null;
         var row = null;
         
-        if(!$("body").hasClass("no_autoload")) {
-            container = $("<div />").addClass("container-fluid");
-            
-            row = $('<div class="row"></div>');
-            
-            $("header").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
-            
-            row.append($("header").detach());
-            container.append(row);
-            
-            row = $('<div class="row"></div>');
-            $("section").each(function (i, card) {
-                if(!$(card).hasClass("no_autoload")) {
-                    i+=1;
-                    /*
-                     * Default stacking of cards:
-                     *      mobile: one
-                     *      tablet: two
-                     *      desktop: four
-                     */
-                    $(card).addClass("jumbotron col-xs-12 col-sm-6 col-md-6 col-lg-3");
-
-                    if(i%2 == 0) { $(card).addClass("m2"); }
-                    if(i%4 == 0) { $(card).addClass("m4"); }
-                }
-            });
-            row.append($("section").detach());
-            container.append(row);
-            
-            row = $('<div class="row"></div>');
-            
-            $("footer").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
-            
-            row.append($("footer").detach());
-            container.append(row);
-            
-            $("body").append(container);
-        }
+        container = $("<div />").addClass("container-fluid");
+        row = $('<div class="row"></div>');
         
-        /* Widgets */
-        var widgets = {};
-        $("[data-widget]").each(function () {
-            var widget_id = $(this).attr("id");
-            widgets[widget_id] = danta.ui.w($(this));
+        $("header").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
+        
+        row.append($("header").detach());
+        container.append(row);
+        
+        row = $('<div class="row"></div>');
+        $("section").each(function (i, card) {
+            if(!$(card).hasClass("no_autoload")) {
+                i+=1;
+                /*
+                    * Default stacking of cards:
+                    *      mobile: one
+                    *      tablet: two
+                    *      desktop: four
+                    */
+                $(card).addClass("jumbotron col-xs-12 col-sm-6 col-md-6 col-lg-3");
+                
+                if(i%2 == 0) { $(card).addClass("m2"); }
+                if(i%4 == 0) { $(card).addClass("m4"); }
+            }
         });
+        row.append($("section").detach());
+        container.append(row);
         
-        return { widgets: widgets };
+        row = $('<div class="row"></div>');
+        
+        $("footer").addClass("col-xs-12 col-sm-12 col-md-12 col-lg-12");
+        
+        row.append($("footer").detach());
+        container.append(row);
+        
+        $("body").append(container);
+    },
+    
+    load_widgets: function () {
+        /* 
+         * danta.$w.x: access declared widgets html
+         * danta.$w(): creates widget
+         */
+        danta.$w = danta.ui.w;
+        
+        $("[data-widget]").each(function () {
+            danta.$w[$(this).attr("id")] = danta.ui.w($(this));
+        });
     }
 }
