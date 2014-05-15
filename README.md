@@ -5,6 +5,11 @@ danta provides a simple and fast way to create basic applications with html5, ja
 
 danta applications are targeted for mobile devices (tablets, smartphones) that have modern browsers.
 
+## todo
+*  refactor and simplify functionality
+*  benchmark
+*  check for memory leaks
+
 ## packages
 
 ### main (danta.js)
