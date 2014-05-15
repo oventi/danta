@@ -81,8 +81,8 @@ danta.ui.widget = {
             this._items = this._items.concat(array); 
             this.trigger("change");
         },
-        remove: function (i) { 
-            this._items.splice(i, 1); 
+        remove: function (i) {
+            this._items.splice(i, 1);
             this.trigger("change");
         },
         
@@ -127,8 +127,8 @@ danta.ui.widget = {
                     var item = $("<li />").addClass("list-group-item");
                     
                     if(typeof e === "object" && "render" in e) {
-                        e.element = item;
                         e.render();
+                        item.append(e.element);
                     }
                     else { item.append(danta.helper.string(e)); }
                     
