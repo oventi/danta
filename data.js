@@ -44,13 +44,16 @@ danta.data = {
     
     o: function (o) {
         if(o._is_danta_object) {
-            /* if the object is a Ui widget */
-            if("element" in o) { delete o.element; }
-
-            var o = JSON.parse(JSON.stringify(o));
-            for(var i in o) { if(i.indexOf("_") !== -1) { delete o[i]; } }
-
-            return o;
+            var dto = {};
+            for(var i in o) {
+                if(typeof o[i] !== "function") {
+                    if(i[0] !== "_" && i !== "element") {
+                        dto[i] = o[i];
+                    }
+                }
+            }
+            
+            return dto;
         }
         else {
             return o;
