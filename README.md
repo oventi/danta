@@ -9,6 +9,7 @@ danta applications are targeted for mobile devices (tablets, smartphones) that h
 *  refactor and simplify functionality
 *  benchmark
 *  check for memory leaks
+*  multiple/single files for danta
 
 ## packages
 
