@@ -56,7 +56,7 @@ section > div {
     border-top: 0;
 }
 
-section h2 {
+section > h2 {
     border: 1px solid #333;
     background: #333;
     color: #ccc;
