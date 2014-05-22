@@ -144,21 +144,23 @@ danta.ui = {
         container.append(row);
         
         row = $('<div class="row"></div>');
-        $("section").each(function (i, card) {
+        
+        /*$("section").each(function (i, card) {
             if(!$(card).hasClass("no_autoload")) {
                 i+=1;
-                /*
-                    * Default stacking of cards:
-                    *      mobile: one
-                    *      tablet: two
-                    *      desktop: four
-                    */
-                $(card).addClass("jumbotron col-xs-12 col-sm-6 col-md-6 col-lg-3");
+                
+                // Default stacking of cards:
+                //  mobile: one
+                //  tablet: two
+                //  desktop: four
+                
+                //$(card).addClass("jumbotron col-xs-12 col-sm-6 col-md-6 col-lg-3");
                 
                 if(i%2 == 0) { $(card).addClass("m2"); }
                 if(i%4 == 0) { $(card).addClass("m4"); }
             }
-        });
+        });*/
+        
         row.append($("section").detach());
         container.append(row);
         

@@ -36,6 +36,8 @@ danta.ui.widget = {
     },
     
     Button: { _type: "danta.ui.widget.Button",
+        _behaviors: { progressable: null },
+        
         click: function (fn) {
             $("button", this.element).off();
             $("button", this.element).click(fn);
@@ -140,6 +142,26 @@ danta.ui.widget = {
         }
     },
     
+    Alert: {
+        message: "",
+        type: "",
+        
+        display: function (_message, _type) {
+            this.message = _message || "";
+            this.type = _type || "info";
+            
+            this.render();
+        },
+        
+        render: function () {
+            this.element.empty();
+            
+            var msg = $("<div />").addClass("alert alert-" + this.type).text(this.message);
+            this.element.append(msg);
+            this.show();
+        }
+    },
+    
     /* ********************************************************************** */
     /* ********************************************************************** */
     
@@ -158,26 +180,6 @@ danta.ui.widget = {
             this.element.append($("<label />").addClass("col-sm-2 control-label").text(label));
             this.element.append(textbox);
             this._attach_behaviors();
-        }
-    },
-    
-    Alert: {
-        _message: "",
-        _type: "",
-
-        display: function (message, type) {
-            this._message = message || "";
-            this._type = type || "info";
-
-            this.render();
-        },
-
-        render: function () {
-            this.element.empty();
-
-            var msg = $("<div />").addClass("alert alert-" + this._type).text(this._message);
-            this.element.append(msg);
-            this.show();
         }
     },
     

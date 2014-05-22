@@ -19,6 +19,7 @@ body {
     overflow: auto;
     margin-top: 40px;
     margin-bottom: 40px;
+    background: #eee;
 }
 
 header, footer {
@@ -45,8 +46,25 @@ header h1 {
     line-height: 40px !important;
 }
 
-h2, h3 {
-    margin-top: 10px !important;
+section {
+    background: #fff;
+    margin: 10px;
+}
+section > div {
+    padding: 5px;
+    border: 1px solid #999;
+    border-top: 0;
+}
+
+section h2 {
+    border: 1px solid #333;
+    background: #333;
+    color: #ccc;
+    margin: 0;
+    text-align: center;
+    font-size: 1em;
+    height: 25px;
+    line-height: 25px !important;
 }
 
 .jumbotron {
@@ -124,14 +142,17 @@ div[data-widget="List"] > ul {
 /* Media queries ************************************************************ */
 
 /* Extra small devices */
+/*
 @media (max-width: 767px) {
     section { margin-bottom: 1%; }
     section:last-child { margin-bottom: 0; }
     
     footer { margin-top: 1%; padding-top: 12px; }
 }
+*/
 
 /* Small devices */
+/*
 @media (min-width: 768px) and (max-width: 991px) {
     section {
         margin-right: 1%;
@@ -142,8 +163,10 @@ div[data-widget="List"] > ul {
     
     footer { margin-top: 1%; }
 }
+*/
 
 /* Medium devices */
+/*
 @media (min-width: 992px) and (max-width: 1199px) {
     section {
         margin-right: 1%;
@@ -152,8 +175,10 @@ div[data-widget="List"] > ul {
     }
     section.m2 { margin-right: 0; }
 }
+*/
 
 /* Large devices */
+/*
 @media (min-width: 1200px) {
     section {
         margin-right: 1%;
@@ -170,3 +195,4 @@ div[data-widget="List"] > ul {
         visibility: hidden;
     }
 }
+*/
