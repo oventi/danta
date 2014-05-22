@@ -47,7 +47,7 @@ header h1 {
 }
 
 section {
-    background: #fff;
+    background-color: #fff;
     margin: 10px;
 }
 section > div {
