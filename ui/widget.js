@@ -145,6 +145,7 @@ danta.ui.widget = {
     Alert: {
         message: "",
         type: "",
+        first_render: true,
         
         display: function (_message, _type) {
             this.message = _message || "";
@@ -153,12 +154,18 @@ danta.ui.widget = {
             this.render();
         },
         
+        _init: function () {
+            this.hide();
+        },
+        
         render: function () {
             this.element.empty();
             
             var msg = $("<div />").addClass("alert alert-" + this.type).text(this.message);
             this.element.append(msg);
-            this.show();
+            
+            if(!this.first_render) { this.show(); }
+            this.first_render = false;
         }
     },
     
