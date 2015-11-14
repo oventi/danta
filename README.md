@@ -1,6 +1,19 @@
 # danta
 *js framework for html5 mobile apps*
 
+Copyright © 2014-2015 Andrés Proaño. andres@oventi.org | oventi.org
+
+danta is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+danta is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+You should have received a copy of the GNU Affero General Public License 
+along with danta. If not, see <http://www.gnu.org/licenses/>.
+
 danta provides a simple and fast way to create basic applications with html5, javascript and css.
 
 danta applications are targeted for mobile devices (tablets, smartphones) that have modern browsers.
