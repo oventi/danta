@@ -13,8 +13,17 @@ module.exports = function (self) {
     var profiler = require('./system/profiler.js');
 
     system.init = function (application) {
-        var profile = profiler(new application());
-        self.config = profile.config;
+        var profile = null;
+        try {
+            profile = profiler(new application());
+            self.config = profile.config;
+        }
+        catch(ex) {
+            let error = self.system.error.profiler;
+
+            console.log(error.description, '| code:', error.code);
+            process.exit(error.code);
+        }
 
         var server = express();
 

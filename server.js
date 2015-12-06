@@ -1,5 +1,12 @@
 var danta = {
-    system: {},
+    system: {
+        error: {
+            profiler: {
+                description: 'An error ocurred when profiling the application',
+                code: 1
+            }
+        }
+    },
     db: {}
 };
 
