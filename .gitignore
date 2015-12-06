@@ -1,5 +1,2 @@
-.old/
-lib/
-lib/*
-danta.min.css
-danta.min.js
+node_modules/*
+
