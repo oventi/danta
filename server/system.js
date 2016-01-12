@@ -3,7 +3,7 @@ var body_parser = require('body-parser');
 var session = require('express-session');
 
 module.exports = function (self) {
-    let system = self.system;
+    var system = self.system;
 
     /*
      * The profiler gets an object with the functions, config, etc
@@ -19,7 +19,7 @@ module.exports = function (self) {
             self.config = profile.config;
         }
         catch(ex) {
-            let error = self.system.error.profiler;
+            var error = self.system.error.profiler;
 
             console.log(error.description, '| code:', error.code);
             process.exit(error.code);
@@ -59,10 +59,10 @@ module.exports = function (self) {
         server.post('*', function (request, response) {
             var method_name = request.url.split('/')[1];
             var app = new application();
-            app.init();
 
             app.config = self.config;
             app.session = request.session;
+            app.init();
 
             app[method_name](request.body, function (error, data) {
                 if(error) {
