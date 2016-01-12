@@ -26,6 +26,7 @@ module.exports = function (self) {
         }
 
         var server = express();
+        server.set('port', (process.env.PORT || 5000));
 
         server.use(express.static('client'));
 		server.use(body_parser.json());
@@ -74,7 +75,7 @@ module.exports = function (self) {
             });
         });
 
-        server.listen(3000);
+        server.listen(server.get('port'));
     }
 
     return self;
