@@ -7,9 +7,11 @@ var danta = {
             }
         }
     },
-    db: {}
+    db: {},
+    file: {}
 };
 
+require('./server/file.js')(danta);
 require('./server/db.js')(danta);
 require('./server/system.js')(danta);
 
