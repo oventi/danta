@@ -4,7 +4,7 @@ module.exports = function (self) {
     var db = self.db;
 
     db.connect = function () {
-        let config = self.config;
+        var config = self.config;
 
         if(config.db) {
             db.monk = monk(config.db);
