@@ -1,0 +1,19 @@
+{
+  "name": "danta_sample",
+  "license": "GPL-3.0",
+  "scripts": {
+    "dev": "node -r esm ./scripts/dev.js"
+  },
+  "dependencies": {
+    "axios": "^0.20.0"
+  },
+  "devDependencies": {
+    "dotenv-json": "^1.0.0",
+    "esm": "^3.2.25",
+    "mustache": "^4.0.1",
+    "sass": "^1.27.0",
+    "static-server": "^2.2.1",
+    "webpack": "^5.1.2",
+    "webpack-cli": "^4.1.0"
+  }
+}

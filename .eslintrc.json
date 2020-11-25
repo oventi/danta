@@ -1,0 +1,11 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
+  "rules": {
+    "quotes": ["error", "single"],
+    "semi": ["error", "never"]
+  }
+}
