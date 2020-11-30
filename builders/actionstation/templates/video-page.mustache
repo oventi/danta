@@ -1,0 +1,22 @@
+{{> layout/top}}
+
+<h1>{{title}}</h1>
+
+<div class="embed-responsive embed-responsive-16by9 my-3">
+  <iframe class="embed-responsive-item" src="{{video_url}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<div class="my-3">
+{{{content}}}
+</div>
+
+<div class="row">
+  <div class="col-6">
+    <a href="/" class="btn btn-primary text-uppercase">back</a>
+  </div>
+  <div class="col">
+    <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
+  </div>
+</div>
+
+{{> layout/bottom}}
