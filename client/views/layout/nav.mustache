@@ -11,7 +11,10 @@
     <ul class="nav nav-pills">
       {{#common.nav}}
       <li id="nav_{{index}}" class="nav-item" aria-label="">
-        <a class="nav-link" href="{{url}}">{{label}}</a>
+        <a class="nav-link" href="{{url}}">
+          <span class="te_reo_maori">{{maori_label}}</span>
+          <span class="te_reo_pakeha">{{label}}</span>
+        </a>
       </li>
       {{/common.nav}}
     </ul>

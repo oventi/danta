@@ -19,16 +19,16 @@ const more_key = {
 
 const get_nav = ({pages, extra_nav_links}) => {
   const [, ...other_pages] = pages
-  const page_links = other_pages.map(({name, title}, i) => (
-    {url: `/${name}.html`, label: title}
+  const page_links = other_pages.map(({name, title, maori_label}, i) => (
+    {url: `/${name}.html`, label: title, maori_label}
   ))
 
   const extra_links = extra_nav_links || []
 
   return [
-    {url: '/', label: 'Home'}, ...page_links, ...extra_links
-  ].map(({url, label}, index) => (
-    {index, url, label}
+    {url: '/', label: 'Home', maori_label: 'Kāinga'}, ...page_links, ...extra_links
+  ].map(({url, label, maori_label}, index) => (
+    {index, url, label, maori_label}
   ))
 }
 
@@ -58,6 +58,7 @@ export async function get_data() {
 
   return {
     nav,
+    base_url: 'https://2020.actionstation.org.nz',
     ...{
       ...data, pages: data.pages.map(page => page.content_type === 'list-page'
         ? get_augmented_list_page(page)
