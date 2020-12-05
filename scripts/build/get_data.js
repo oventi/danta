@@ -17,29 +17,33 @@ const more_key = {
   'video-page': 'Watch Video'
 }
 
-const get_nav = ({pages, extra_nav_links}) => {
+const get_nav = ({pages, extra_nav_links}, base_url) => {
   const [, ...other_pages] = pages
   const page_links = other_pages.map(({name, title, maori_label}, i) => (
-    {url: `/${name}.html`, label: title, maori_label}
+    {url: `${base_url}/${name}`, label: title, maori_label}
   ))
 
-  const extra_links = extra_nav_links || []
+  const extra_links = (extra_nav_links || [])
+    .map(link => ({target: `target = "_asr"`, ...link}))
 
   return [
-    {url: '/', label: 'Home', maori_label: 'Kāinga'}, ...page_links, ...extra_links
-  ].map(({url, label, maori_label}, index) => (
-    {index, url, label, maori_label}
+    {url: base_url, label: 'Home', maori_label: 'Kāinga'}, ...page_links, ...extra_links
+  ].map(({url, label, maori_label, target}, index) => (
+    {index, url, label, maori_label, target}
   ))
 }
 
-const get_augmented_list_page = page => ({
+const get_augmented_list_page = (page, base_url) => ({
   ...page,
   pages: page.pages.map(p => ({
-    ...p, more: more_key[p.content_type], more_link: `/${p.name}.html`
+    ...p, more: more_key[p.content_type], more_link: `${p.name}`
   }))
 })
 
 export async function get_data() {
+  const base_url = 'https://website-staging.actionstation.org.nz/annual-reports/2020'
+  //const base_url = 'http://localhost:3000/annual-reports/2020'
+
   // IMPORT: MAKE SURE THERE IS NO MORE THAN 10 levels of linking
   // https://www.contentful.com/developers/docs/concepts/links/
   const data_file = './contentful_data_dev.json'
@@ -54,14 +58,13 @@ export async function get_data() {
     file_write(data_file, JSON.stringify(data))
   }
 
-  const nav = get_nav(data)
+  const nav = get_nav(data, base_url)
 
   return {
-    nav,
-    base_url: 'https://2020.actionstation.org.nz',
+    nav, base_url,
     ...{
       ...data, pages: data.pages.map(page => page.content_type === 'list-page'
-        ? get_augmented_list_page(page)
+        ? get_augmented_list_page(page, base_url)
         : page
       )
     }

@@ -1,17 +1,21 @@
-<nav class="navbar navbar-dark bg-dark flex-md-nowrap shadow">
-  <a class="navbar-brand mr-0" href="/" aria-label="ActionStation Members">
-    <img
-      class="img-fluid"
-      src="https://actionstation.org.nz/packs/images/nav-logo-c0341dd0581fea820da418306fa93730.png"
-      width="175"
-      alt="{{common.title}}" />
-  </a>
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark py-3 py-xl-1">
+  <!--a class="navbar-brand mr-0" href="/" aria-label="ActionStation Members"-->
+  <img
+    class="img-fluid"
+    src="https://actionstation.org.nz/packs/images/nav-logo-c0341dd0581fea820da418306fa93730.png"
+    width="175"
+    alt="{{common.title}}" />
+  <!--/a-->
 
-  <div id="navbar_links" class="mt-2 mb-1" aria-label="Navigation">
-    <ul class="nav nav-pills">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_links" aria-controls="navbar_links" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div id="navbar_links" class="collapse navbar-collapse mt-2 mb-1" aria-label="Navigation">
+    <ul style="margin-left: auto;" class="navbar-nav nav-pills">
       {{#common.nav}}
       <li id="nav_{{index}}" class="nav-item" aria-label="">
-        <a class="nav-link" href="{{url}}">
+        <a class="nav-link px-3" href="{{url}}" {{&target}}>
           <span class="te_reo_maori">{{maori_label}}</span>
           <span class="te_reo_pakeha">{{label}}</span>
         </a>

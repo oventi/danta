@@ -7,7 +7,7 @@
     <meta name="description" content="{{caption}}">
 
     <meta property="og:locale" content="en_NZ"/>
-    <meta property="og:url" content="{{&common.base_url}}{{&more_link}}" />
+    <meta property="og:url" content="{{&common.base_url}}/{{name}}" />
     <!--meta property="og:type" content="article" /-->
     <meta property="og:title" content="{{common.title}} | {{title}}" />
     {{#thumbnail}}
@@ -17,7 +17,7 @@
     <meta property="og:site_name" content="ActionStation" />
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="{{&common.base_url}}{{&more_link}}">
+    <meta name="twitter:url" content="{{&common.base_url}}/{{name}}">
     <meta name="twitter:title" content="{{common.title}} | {{title}}">
     <meta name="twitter:description" content="{{caption}}">
     <meta name="twitter:image" content="https:{{&thumbnail.file.url}}">
@@ -30,6 +30,8 @@
     <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5fc4a794b4aee5001239a088&product=sop' async='async'></script>
 
     <title>{{common.title}} | {{title}}</title>
+
+    <base href="{{&common.base_url}}" />
   </head>
   <body class="{{content_type}}">
 

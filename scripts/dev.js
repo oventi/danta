@@ -35,7 +35,7 @@ async function build_dev() {
     // inject css file
     const injected_html = html
       .replace('</head>', `
-          <link rel="stylesheet" href="/index.css">
+          <link rel="stylesheet" href="./2020/index.css?ts=${Date.now()}">
         </head>
       `)
 
@@ -45,8 +45,12 @@ async function build_dev() {
 }
 
 (async () => {
+  await build_dev()
+
+  /*
   const StaticServer = require('static-server')
-  const server = new StaticServer({rootPath: './dist', port: 3000, cors: '*', followSymlink: true})
+  const server = new StaticServer({rootPath: './dist', port: 4000, cors: '*', followSymlink: true})
   server.on('request',  async (req, res) => await build_dev())
   server.start(() => console.log('danta app running on', server.port))
+  */
 })()

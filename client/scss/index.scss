@@ -6,15 +6,16 @@ nav.navbar, footer {
   background-image: url(https://actionstation.org.nz/packs/images/background-texture-66775105e3213d36d4f97ea09181c424.jpg);
 }
 
-ul.nav li {
+ul.navbar-nav li {
   a {
-    color: #fff;
+    color: #fff !important;
   }
 }
 
 #navbar_links {
   a {
     text-transform: uppercase;
+    font-size: .9rem;
 
     span.te_reo_maori, span.te_reo_pakeha {
       display: block;
@@ -83,10 +84,14 @@ h1 {
   transition: none !important;
 }
 
-footer nav a.nav-link {
-  color: #fff;
-  padding: 0;
-  margin-bottom: 0.5em;
+footer {
+  margin-bottom: -4px;
+
+  nav a.nav-link {
+    color: #fff;
+    padding: 0;
+    margin-bottom: 0.5em;
+  }
 }
 
 .sharethis-inline-share-buttons {
