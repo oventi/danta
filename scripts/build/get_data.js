@@ -41,8 +41,8 @@ const get_augmented_list_page = (page, base_url) => ({
 })
 
 export async function get_data() {
-  const base_url = 'https://website-staging.actionstation.org.nz/annual-reports/2020'
-  //const base_url = 'http://localhost:3000/annual-reports/2020'
+  const [,, base_root_url] = process.argv
+  const base_url = `${base_root_url}/annual-reports/2020`
 
   // IMPORT: MAKE SURE THERE IS NO MORE THAN 10 levels of linking
   // https://www.contentful.com/developers/docs/concepts/links/
