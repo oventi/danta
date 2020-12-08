@@ -12,6 +12,8 @@ import {get_templates} from '../lib/templates'
 set_env('dev')
 
 async function build_dev() {
+  const [,, base_url, suffix] = process.argv
+
   // build css (should scss be used instead?)
   exec('yarn sass ./client/scss/index.scss dist/index.css')
 
@@ -22,7 +24,7 @@ async function build_dev() {
   const templates = get_templates()
 
   // get data from the cms
-  const data = await get_data('dev')
+  const data = await get_data('dev', base_url, suffix || '')
 
   // get file related data
   const file_data = await get_file_data(data)
@@ -35,7 +37,7 @@ async function build_dev() {
     // inject css file
     const injected_html = html
       .replace('</head>', `
-          <link rel="stylesheet" href="./2020/index.css?ts=${Date.now()}">
+          <link rel="stylesheet" href="${base_url}/index.css?ts=${Date.now()}">
         </head>
       `)
 
@@ -44,13 +46,14 @@ async function build_dev() {
   }
 }
 
+// SAMPLE CALL: yarn dev https://xyz.ngrok.io .html
+
 (async () => {
   await build_dev()
+  setInterval(async () => await build_dev(), 5000)
 
-  /*
   const StaticServer = require('static-server')
   const server = new StaticServer({rootPath: './dist', port: 4000, cors: '*', followSymlink: true})
   server.on('request',  async (req, res) => await build_dev())
   server.start(() => console.log('danta app running on', server.port))
-  */
 })()

@@ -17,10 +17,10 @@ const more_key = {
   'video-page': 'Watch Video'
 }
 
-const get_nav = ({pages, extra_nav_links}, base_url) => {
+const get_nav = ({pages, extra_nav_links}, base_url, suffix) => {
   const [, ...other_pages] = pages
   const page_links = other_pages.map(({name, title, maori_label}, i) => (
-    {url: `${base_url}/${name}`, label: title, maori_label}
+    {url: `${base_url}/${name}${suffix}`, label: title, maori_label}
   ))
 
   const extra_links = (extra_nav_links || [])
@@ -33,22 +33,19 @@ const get_nav = ({pages, extra_nav_links}, base_url) => {
   ))
 }
 
-const get_augmented_list_page = (page, base_url) => ({
+const get_augmented_list_page = (page, base_url, suffix) => ({
   ...page,
   pages: page.pages.map(p => ({
-    ...p, more: more_key[p.content_type], more_link: `${p.name}`
+    ...p, more: more_key[p.content_type], more_link: `${base_url}/${p.name}${suffix}`
   }))
 })
 
-export async function get_data() {
-  const [,, base_root_url] = process.argv
-  const base_url = `${base_root_url}/annual-reports/2020`
-
+export async function get_data(stage, base_url, suffix) {
   // IMPORT: MAKE SURE THERE IS NO MORE THAN 10 levels of linking
   // https://www.contentful.com/developers/docs/concepts/links/
   const data_file = './contentful_data_dev.json'
   let data = {}
-  if(file_exists(data_file)) {
+  if(base_url.indexOf('localhost') !== -1 && file_exists(data_file)) {
     data = JSON.parse(file_read(data_file))
   }
   else {
@@ -58,13 +55,13 @@ export async function get_data() {
     file_write(data_file, JSON.stringify(data))
   }
 
-  const nav = get_nav(data, base_url)
+  const nav = get_nav(data, base_url, suffix)
 
   return {
     nav, base_url,
     ...{
       ...data, pages: data.pages.map(page => page.content_type === 'list-page'
-        ? get_augmented_list_page(page, base_url)
+        ? get_augmented_list_page(page, base_url, suffix)
         : page
       )
     }
