@@ -1,3 +1,4 @@
 node_modules
 dist
 contentful_data_dev.json
+contentful_data_dev*.json
