@@ -49,6 +49,10 @@ h1 {
 .list-page .pages .card {
   border: 0;
 
+  .card-body a {
+    color: #212529;
+  }
+
   a.more.btn {
     border: none;
     background-color: #ffc708;

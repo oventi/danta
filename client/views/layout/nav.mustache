@@ -4,20 +4,20 @@
     class="img-fluid"
     src="https://actionstation.org.nz/packs/images/nav-logo-c0341dd0581fea820da418306fa93730.png"
     width="175"
-    alt="{{common.title}}" />
+    alt="ActionStation logo" />
   <!--/a-->
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_links" aria-controls="navbar_links" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div id="navbar_links" class="collapse navbar-collapse mt-2 mb-1" aria-label="Navigation">
-    <ul style="margin-left: auto;" class="navbar-nav nav-pills">
+  <div id="navbar_links" class="collapse navbar-collapse mt-2 mb-1">
+    <ul style="margin-left: auto;" class="navbar-nav nav-pills" role="navigation">
       {{#common.nav}}
-      <li id="nav_{{index}}" class="nav-item" aria-label="">
-        <a class="nav-link px-3" href="{{url}}" {{&target}}>
-          <span class="te_reo_maori">{{maori_label}}</span>
-          <span class="te_reo_pakeha">{{label}}</span>
+      <li id="nav_{{index}}" class="nav-item">
+        <a class="nav-link px-3" href="{{url}}" {{&target}} aria-label="{{maori_label}}, {{label}}">
+          <span aria-hidden="true" class="te_reo_maori">{{maori_label}}</span>
+          <span aria-hidden="true" class="te_reo_pakeha">{{label}}</span>
         </a>
       </li>
       {{/common.nav}}

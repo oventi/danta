@@ -13,6 +13,7 @@ import {
 import {get_data as contentful_get_data} from '../../lib/contentful'
 
 const more_key = {
+  'free-page': 'Read More',
   'article-page': 'Read More',
   'video-page': 'Watch Video'
 }
@@ -34,7 +35,7 @@ const get_nav = ({pages, extra_nav_links}, base_url, suffix) => {
 }
 
 const get_augmented_list_page = (page, base_url, suffix) => ({
-  ...page,
+  ...page, name: `index${suffix}`,
   pages: page.pages.map(p => ({
     ...p, more: more_key[p.content_type], more_link: `${base_url}/${p.name}${suffix}`
   }))
