@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="ARIA?">
+  <div class="container">
+    <a class="navbar-brand" href="/" aria-label="ARIA?">
+      <img
+        class="img-fluid"
+        src="{{&global.brand.file.url}}"
+        alt="{{global.brand.title}}" />
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar_links" aria-controls="navbar_links" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar_links" class="collapse navbar-collapse">
+      <ul style="margin-left: auto;" class="navbar-nav">
+        {{#global.navigation}}
+        <li class="nav-item">
+          <a class="nav-link" href="{{&link}}" target="{{&target}}">{{label}}</a>
+        </li>
+        {{/global.navigation}}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!--
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark py-3 py-xl-1">
+  <div id="navbar_links" class="collapse navbar-collapse mt-2 mb-1">
+    <ul style="margin-left: auto;" class="navbar-nav nav-pills" role="navigation">
+    </ul>
+  </div>
+</nav>
+-->

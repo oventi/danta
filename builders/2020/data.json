@@ -1,0 +1,61 @@
+{
+  "css_classes": "2020",
+  "base_url": "http://localhost:8080",
+  "title": "2020 Builder",
+  "brand": {
+    "title": "Brand",
+    "file": {"url": "https://via.placeholder.com/175x50?text=BRAND"}
+  },
+  "navigation": [
+    {"link": "/one", "target": "_self", "label": "One"},
+    {"link": "/two", "target": "_self", "label": "Two"},
+    {"link": "/three", "target": "_self", "label": "Three"}
+  ],
+  "content": "<p><em>2020 Builder</em></p>",
+  "pages": [
+    {
+      "template": "article",
+      "name": "one",
+      "title": "One",
+      "thumbnail": {
+        "title": "One",
+        "file": {"url": "https://via.placeholder.com/400x210?text=ONE"}
+      },
+      "caption": "One",
+      "more": {"label": "Go to page", "link": "/one"},
+      "header": {
+        "title": "One",
+        "file": {"url": "https://via.placeholder.com/1200x500?text=ONE"}
+      },
+      "content": "<p>Page One 1</p>"
+    },
+    {
+      "template": "free",
+      "name": "two",
+      "title": "Two",
+      "thumbnail": {
+        "title": "Two",
+        "file": {"url": "https://via.placeholder.com/400x210?text=TWO"}
+      },
+      "caption": "Two",
+      "more": {"label": "Go to page", "link": "/two"},
+      "content": "<p>Page Two 2</p>"
+    },
+    {
+      "template": "video",
+      "name": "three",
+      "title": "Three",
+      "thumbnail": {
+        "title": "Three",
+        "file": {"url": "https://via.placeholder.com/400x210?text=THREE"}
+      },
+      "caption": "Three",
+      "more": {"label": "Go to page", "link": "/three"},
+      "video": {
+        "link": "https://youtu.be/dQw4w9WgXcQ",
+        "embed_link": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+      },
+      "content": "<p>Page Three 3</p>"
+    }
+  ]
+}
