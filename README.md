@@ -11,10 +11,11 @@ danta requires certain languages, formats and frameworks to be used
 - scss for stylesheets
 
 ## building process
-- TDB
+- you must have at least 1 builder on `./builders`
+- TBD
 
 
 ## Example scenario
 - An organisation wants to create a microsite based on the builder from ActionStation
 - The ActionStation builder is called asar (ActionStation Annual Report)
-- `yarn build asar` (located in ./builders/asar)
+- `yarn build <project> <builder>` (located in ./builders/2020)
