@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="ARIA?">
+  <div class="container">
+    <a class="navbar-brand" href="/" aria-label="ARIA?">
+      <img
+        class="img-fluid"
+        src="{{&global.brand.url}}"
+        alt="{{global.brand.alternativeText}}"
+        style="height: 45px;" />
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar_links" aria-controls="navbar_links" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar_links" class="collapse navbar-collapse">
+      <ul style="margin-left: auto;" class="navbar-nav">
+        {{#global.navigation_links}}
+        <li class="nav-item">
+          <a class="nav-link" href="{{&url}}" target="{{&target}}">{{label}}</a>
+        </li>
+        {{/global.navigation_links}}
+      </ul>
+    </div>
+  </div>
+</nav>

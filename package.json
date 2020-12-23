@@ -5,15 +5,17 @@
     "build": "node -r esm ./lib/build.js"
   },
   "dependencies": {
-    "axios": "^0.20.0"
-  },
-  "devDependencies": {
+    "axios": "^0.20.0",
     "dotenv-json": "^1.0.0",
-    "esm": "^3.2.25",
     "express": "^4.17.1",
     "mustache": "^4.0.1",
+    "strapi-sdk-javascript": "^0.3.3"
+  },
+  "devDependencies": {
+    "commonmark": "^0.29.3",
+    "esm": "^3.2.25",
+    "image-downloader": "^4.0.2",
     "sass": "^1.27.0",
-    "static-server": "^2.2.1",
     "webpack": "^5.1.2",
     "webpack-cli": "^4.1.0"
   }

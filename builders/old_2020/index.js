@@ -4,15 +4,6 @@ import {get_file_builder} from '../../lib/builder/files'
 
 export async function build(project_name, templates, raw_data) {
   const {build_file} = get_file_builder(project_name, templates)
-  const build_page = (page, global) => {
-    build_file(page.name, 'page', {...page, global})
-
-    if(page.pages && page.pages.length > 0) {
-      for(const child_page of page.pages) {
-        build_page(child_page, global)
-      }
-    }
-  }
 
   if(!raw_data.pages || raw_data.pages.length === 0) {
     throw new Error('Pages are required')
@@ -29,9 +20,8 @@ export async function build(project_name, templates, raw_data) {
   build_file('index', 'page', {...pages[0], global: data})
 
   // build rest of the pages
-  for(const page of pages.slice(1)) {
-    //build_page(page.name, {...page, global: rest})
-    build_page(page, rest)
+  for(const page of pages) {
+    build_file(page.name, 'page', {...page, global: rest})
   }
 
   /*
