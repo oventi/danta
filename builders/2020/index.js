@@ -1,4 +1,3 @@
-import {render} from 'mustache'
 import {markdown_to_html} from '../../lib/markdown'
 import {get_file_builder} from '../../lib/builder/files'
 
@@ -30,23 +29,6 @@ export async function build(project_name, templates, raw_data) {
 
   // build rest of the pages
   for(const page of pages.slice(1)) {
-    //build_page(page.name, {...page, global: rest})
     build_page(page, rest)
   }
-
-  /*
-  build_file('index', 'index', {global: data})
-
-  //const html = render(templates['index'], {global: data}, templates)
-  //file_write(`./dist/${project_name}/index.html`, html)
-
-  for(const page of pages) {
-    //const {[page.template]: template, ...partials} = templates
-    //const html = render(template, {...page, global: rest}, partials)
-    //file_write(`./dist/${project_name}/${page.name}.html`, html)
-
-    const {name, template} = page
-    build_file(name, template, {...page, global: rest})
-  }
-  */
 }
