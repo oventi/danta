@@ -7,9 +7,20 @@ import {
 import {download_image} from '../../lib/assets'
 
 export function get_config() {
-  return {
-    builder: '2020'
+  return {}
+}
+
+async function expand_pages(page) {
+  const strapi = new Strapi('http://localhost:1337')
+  page.has_children = page.pages && page.pages.length > 0
+  page.content += '\n\n' + (page.raw_content || '')
+
+  for(const [index, page_id] of page.pages.entries()) {
+    const full_page = await strapi.getEntry('pages', page_id)
+    page.pages[index] = await expand_pages(full_page)
   }
+
+  return page
 }
 
 export async function get_data(stage) {
@@ -28,14 +39,15 @@ export async function get_data(stage) {
   }
 
   const data = await strapi.getEntries('ma-main')
-  for(const page of data.pages) {
-    if(page.pages.length > 0) {
-      page.has_children = true
-      for(const [index, page_id] of page.pages.entries()) {
-        page.pages[index] = await strapi.getEntry('pages', page_id)
-      }
-    }
+  // TODO
+  // traverse page tree, combine all markdown content and raw_content
+  // into single html content
+  for(let page of data.pages) {
+    page = await expand_pages(page)
   }
 
-  return data
+  let str_data = JSON.stringify(data)
+  str_data = str_data.replace(/"alternativeText"/g, '"alt"')
+
+  return JSON.parse(str_data)
 }

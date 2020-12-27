@@ -5,6 +5,7 @@
     "build": "node -r esm ./lib/build.js"
   },
   "dependencies": {
+    "ajv": "^7.0.2",
     "axios": "^0.20.0",
     "dotenv-json": "^1.0.0",
     "express": "^4.17.1",

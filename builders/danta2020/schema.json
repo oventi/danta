@@ -1,0 +1,174 @@
+{
+	"definitions": {
+		"image": {
+			"type": "object",
+			"required": [
+				"name",
+				"alt",
+				"url"
+			],
+      "properties": {
+				"name": {
+					"$id": "#/definitions/image/name",
+					"title": "name",
+					"type": "string"
+				},
+				"alt": {
+					"$id": "#/definitions/alt",
+					"title": "alt",
+					"type": "string"
+				},
+				"url": {
+					"$id": "#/definitions/image/url",
+					"title": "url",
+					"type": "string"
+				},
+				"width": {
+					"$id": "#/definitions/image/width",
+					"title": "width",
+					"type": "integer"
+				},
+				"height": {
+					"$id": "#/definitions/image/height",
+					"title": "height",
+					"type": "integer"
+				}
+			}
+		},
+		"page": {
+			"type": "object",
+			"required": [
+				"name",
+				"title",
+				"content",
+				"has_children",
+				"thumbnail",
+				"caption"
+			],
+			"properties": {
+				"name": {
+					"$id": "#/definitions/page/name",
+					"title": "name",
+					"type": "string"
+				},
+				"title": {
+					"$id": "#/definitions/page/title",
+					"title": "title",
+					"type": "string"
+				},
+				"content": {
+					"$id": "#/definitions/page/content",
+					"title": "content",
+					"type": "string"
+				},
+				"has_children": {
+					"$id": "#/definitions/page/has_children",
+					"title": "has_children",
+					"type": "boolean",
+					"default": false
+				},
+				"thumbnail": {
+					"$id": "#/definitions/page/thumbnail",
+					"title": "thumbnail",
+					"$ref": "#/definitions/image"
+				},
+				"caption": {
+					"$id": "#/definitions/page/caption",
+					"title": "caption",
+					"type": "string"
+				},
+				"header_image": {
+					"$id": "#/definitions/page/header_image",
+					"title": "header_image",
+					"$ref": "#/definitions/image"
+				},
+				"video_url": {
+					"$id": "#/definitions/page/video_url",
+					"title": "video_url",
+					"type": "string"
+				},
+				"pages": {
+					"$id": "#/definitions/page/pages",
+					"title": "pages",
+					"type": "array",
+					"default": [],
+					"items":{"$ref": "#/definitions/page"}
+				}
+			}
+		}
+	},
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "https://oventi.org/danta/danta2020.schema.json",
+	"title": "danta2020",
+	"type": "object",
+	"required": [
+		"base_url",
+		"title",
+		"brand",
+		"navigation_links",
+		"pages",
+		"footer_text"
+	],
+	"properties": {
+		"base_url": {
+			"$id": "#/base_url",
+			"title": "base_url",
+			"type": "string"
+		},
+		"title": {
+			"$id": "#/title",
+			"title": "title",
+			"type": "string",
+			"default": "danta2020"
+		},
+		"brand": {
+			"$id": "#/brand",
+			"title": "brand",
+			"$ref": "#/definitions/image"
+		},
+		"navigation_links": {
+			"$id": "#/navigation_links",
+			"title": "navigation_links",
+			"type": "array",
+			"default": [],
+			"items":{
+				"$id": "#/navigation_links/items",
+				"type": "object",
+				"required": [
+					"label",
+					"url"
+				],
+				"properties": {
+					"label": {
+						"$id": "#/navigation_links/items/label",
+						"title": "label",
+						"type": "string"
+					},
+					"url": {
+						"$id": "#/navigation_links/items/url",
+						"title": "url",
+						"type": "string"
+					},
+					"target": {
+						"$id": "#/navigation_links/items/target",
+						"title": "target",
+						"type": "string"
+					}
+				}
+			}
+
+		},
+		"pages": {
+			"$id": "#/pages",
+			"title": "pages",
+			"type": "array",
+			"minItems": 1,
+			"items":{"$ref": "#/definitions/page"}
+		},
+		"footer_text": {
+			"$id": "#/footer_text",
+			"title": "footer_text",
+			"type": "string"
+		}
+	}
+}
