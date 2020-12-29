@@ -3,6 +3,11 @@
 a set of tools, frameworks, code and boilerplate to generate static sites and
 apps with a headless cms, html5, javascript and css.
 
+## installation
+- run `yarn link` in `./lib`
+- add symblinks in builders and projects
+- run `yarn link danta` in each builder and project
+
 ## specific enforcements
 danta requires certain languages, formats and frameworks to be used
 
