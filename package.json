@@ -1,7 +1,8 @@
 {
   "license": "GPL-3.0",
   "scripts": {
-    "build": "node -r esm ./lib/build.js"
+    "build": "node -r esm ./lib/build.js",
+    "dev": "node -r esm ./lib/dev.js"
   },
   "devDependencies": {
     "esm": "^3.2.25",
