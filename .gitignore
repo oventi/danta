@@ -1,2 +1,4 @@
-node_modules
+builders/*
 dist
+node_modules
+projects/*
