@@ -1,11 +1,15 @@
 {
   "license": "GPL-3.0",
   "scripts": {
-    "build": "node -r esm ./lib/build.js",
-    "dev": "node -r esm ./lib/dev.js"
+    "dev": "node -r esm ./dev/index.js",
+    "build": "node -r esm ./build/cli.js"
   },
   "devDependencies": {
     "esm": "^3.2.25",
     "sass": "^1.27.0"
+  },
+  "dependencies": {
+    "ajv": "^7.1.1",
+    "express": "^4.17.1"
   }
 }
