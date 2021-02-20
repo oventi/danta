@@ -6,6 +6,7 @@ A toolkit to create websites or apps, focused on social impact projects.
 
 ## quickstart
 TBD
+[Detailed how-to](docs/how_to.md)
 
 ## what has been built with it?
 - [ActionStation 2020 Annual Report](https://actionstation.org.nz/annual-reports/2020)
@@ -24,17 +25,7 @@ Danta has builders and projects. A builder is a generic process that takes speci
 - Must have a `schema.json` file to validate data from the project
 - Can have a folder `scss` for css, but if it does, it must have `scss/index.scss` as entry point
 
-### project
+### projects
 - Must go in the `projects` folder (symlink recommended)
 - Must have an `index.js` that exports `async function get_data(stage)`
 - Can have a folder `scss` for custom css, but if it does, it must have `scss/index.scss` as entry point
-
-## installation
-- run `yarn link` in `./lib`
-- add symblinks in builders and projects
-- run `yarn link danta` in each builder and project
-
-## usage
-- An organisation wants to create a microsite based on the 2020 builder
-- The ActionStation builder is called asar (ActionStation Annual Report)
-- `yarn build <project> <builder>`
