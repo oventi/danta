@@ -1,4 +1,4 @@
-node_modules
+builders/*
 dist
-contentful_data_dev.json
-contentful_data_dev*.json
+node_modules
+projects/*

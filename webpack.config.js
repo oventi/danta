@@ -1,3 +1,4 @@
+// NOT USED FOR NOW
 // https://www.robertcooper.me/front-end-javascript-environment-variables
 
 const webpack = require('webpack')
@@ -5,7 +6,7 @@ const webpack = require('webpack')
 module.exports = env => {
 
   console.log(env)
-  
+
   const is_production = new Boolean(env && env.production).valueOf()
   const webpack_mode = is_production ? 'production' : 'development'
   const env_mode = is_production ? 'prod' : 'dev'
