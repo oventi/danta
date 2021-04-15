@@ -1,29 +1,18 @@
 # danta
+A toolkit to create websites or apps, focused on social impact projects.
 
-A toolkit to create static websites or apps using a JSON data (including headless CMS), templates using mustache/html5, css and javascript. Its focus is on helping non profits and activist causes.
+## tech stack
+[JSON data](https://beginnersbook.com/2015/04/json-tutorial/), templates using [mustache](https://github.com/janl/mustache.js/blob/master/README.md)/html5, css and javascript. Built to run on GNU/Linux machines.
 
-## components
+## quickstart
+[Detailed how-to](docs/how_to.md)
 
-Danta has builders and projects. A builder is a generic process that takes specific data and generates a static website or app. A project is the process to get and prepare data (usually from a headless CMS) and write custom css and other code for a static website or app. Both projects and builder can use
+## what has been built with it?
+- [ActionStation 2020 Annual Report](https://actionstation.org.nz/annual-reports/2020)
+- [Migrants Aotearoa website](https://migrantsaotearoa.org.nz/)
+- [Andrés Proaño Valencia (oventi) single page](https://oventi.org/)
 
-### builder
-- MUST go in the `builders` folder (it can be a symlink)
-- MUST have an `index.js` that exports `async function build(project_name, templates, data)`
-- MUST have a `templates` folder with at least one file with mustache
-- MUST have a `schema.json` file to validate data from the project
-- CAN have a folder `scss` for css, but MUST have `scss/index.scss` as entry point
+## how does it work?
+Danta's purpose is to serve as a development tool, run in the command line and then create static bundles for deployment in [object storage](https://en.wikipedia.org/wiki/Object_storage).
 
-### project
-- MUST go in the `projects` folder (it can be a symlink)
-- MUST have an `index.js` that exports `async function get_data(stage)`
-- CAN have a folder `scss` for custom css, but MUST have `scss/index.scss` as entry point
-
-## installation
-- run `yarn link` in `./lib`
-- add symblinks in builders and projects
-- run `yarn link danta` in each builder and project
-
-## usage
-- An organisation wants to create a microsite based on the 2020 builder
-- The ActionStation builder is called asar (ActionStation Annual Report)
-- `yarn build <project> <builder>`
+Danta has builders and projects. A builder is a generic process that takes specific data and creates a static website or app. A project is the process to get and prepare data (from a JSON file or headless CMS) and use custom code for a static website or app. To use WordPress as a comparison, **a builder is equivalent to a theme, and a project equivalent to a single installation**.
