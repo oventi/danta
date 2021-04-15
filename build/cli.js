@@ -1,8 +1,8 @@
 import {existsSync as file_exists} from 'fs'
 import {execSync as exec} from 'child_process'
 
-import {make_dir} from './'
-import {build} from './builder/build'
+import {make_dir} from '../lib'
+import {build} from './'
 
 const [,, project_name, builder_name] = process.argv
 
