@@ -9,16 +9,19 @@
 
 ## For builders
 - Must go in the `builders` folder (symlink recommended)
+- Must have a `schema.json` file to validate data (it can require zero properties)
 - Must have an `index.js` that exports `async function build(project_name, templates, data)`
 - Must have a `templates` folder with at least one mustache file
-- Must have a `schema.json` file to validate data from the project
+- Must use `{{&global.css}}` for the builder and project css as html tags
 - Can have a folder `scss` for css, but if it does, it must have `scss/index.scss` as entry point
+- Can have a folder `assets` for images and other files
 
 ## For projects
 - Config values on must go on `/var/local/[project_name]_[stage].json` and will be available via `process.env`
 - Must go in the `projects` folder (symlink recommended)
 - Must have an `index.js` that exports `async function get_data(stage)`
 - Can have a folder `scss` for custom css, but if it does, it must have `scss/index.scss` as entry point
+- Can have a folder `assets` for images and other files
 
 ## To run
 - For **dev** mode, run `yarn dev [project_name] [builder_name]`

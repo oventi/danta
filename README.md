@@ -1,5 +1,5 @@
 # danta
-A toolkit to create websites or apps, focused on social impact projects.
+A toolkit to create static websites or apps using a JSON data (including headless CMS), templates using mustache/html5, css and javascript. Its focus is on helping non profits and activist causes.
 
 ## tech stack
 [JSON data](https://beginnersbook.com/2015/04/json-tutorial/), templates using [mustache](https://github.com/janl/mustache.js/blob/master/README.md)/html5, css and javascript. Built to run on GNU/Linux machines.
