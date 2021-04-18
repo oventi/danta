@@ -14,7 +14,7 @@ export const build = async (project, builder, stage = 'dev') => {
   exec(`yarn sass ${project.path}/scss/index.scss ${DIST_PATH}/project.css`)
 
   const templates = get_templates(`${builder.path}/templates`)
-  const project_data = await project.get_data()
+  const project_data = await project.get_data(stage)
 
   const {valid, errors} = await validate_data(project_data, builder.path)
   if(!valid) {
