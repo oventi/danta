@@ -1,7 +1,10 @@
+import dotenvJSON from 'dotenv-json'
 import {make_dir} from '../lib'
 import {start_server} from './server'
 
 const [,, project_name, builder_name] = process.argv
+
+dotenvJSON({ path: `/var/local/${project_name}_dev.json`});
 
 const project = require(`../projects/${project_name}`)
 project.name = project_name

@@ -5,11 +5,13 @@
     "build": "node -r esm ./build/cli.js"
   },
   "devDependencies": {
+    "@contentful/rich-text-html-renderer": "^14.1.2",
     "ajv": "^7.1.1",
+    "dotenv-json": "^1.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "lodash": "^4.17.21",
     "sass": "^1.27.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
