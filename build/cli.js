@@ -7,7 +7,7 @@ import {build} from './'
 
 const [,, project_name, builder_name] = process.argv
 
-dotenvJSON({ path: `/var/local/${project_name}_dev.json`});
+dotenvJSON({ path: `/var/local/${project_name}_build.json`});
 
 const project = require(`../projects/${project_name}`)
 project.name = project_name
