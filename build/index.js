@@ -7,7 +7,7 @@ import {make_dir} from '../lib'
 export const build = async (project, builder, stage = 'dev') => {
   const BASE_URL = process.env.BASE_URL || config.BASE_URL
   const [protocol, host, port] = BASE_URL.split(':')
-  const PORT = parseInt(port, 10) || 2810
+  const PORT = stage === 'dev' ? (parseInt(port, 10) || 2810) : ''
 
   const DIST_PATH = `./dist/${project.name}`
   const ts = Date.now()
