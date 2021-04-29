@@ -1,3 +1,4 @@
+import dotenvJSON from 'dotenv-json'
 import {existsSync as file_exists} from 'fs'
 import {execSync as exec} from 'child_process'
 
@@ -5,6 +6,8 @@ import {make_dir} from '../lib'
 import {build} from './'
 
 const [,, project_name, builder_name] = process.argv
+
+dotenvJSON({ path: `/var/local/${project_name}_dev.json`});
 
 const project = require(`../projects/${project_name}`)
 project.name = project_name
