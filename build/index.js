@@ -19,8 +19,8 @@ export const build = async (project, builder, stage = 'dev') => {
   make_dir(`${DIST_PATH}/assets`)
 
   // TODO: check if the assets folder exists
-  exec(`cp ${builder.path}/assets/* ${DIST_PATH}/assets/.`)
-  exec(`cp ${project.path}/assets/* ${DIST_PATH}/assets/.`)
+  exec(`cp -r ${builder.path}/assets/* ${DIST_PATH}/assets/.`)
+  exec(`cp -r ${project.path}/assets/* ${DIST_PATH}/assets/.`)
 
   const templates = get_templates(`${builder.path}/templates`)
   const project_data = await project.get_data(stage)
