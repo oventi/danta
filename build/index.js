@@ -7,7 +7,8 @@ import {make_dir} from '../lib'
 export const build = async (project, builder, stage = 'dev') => {
   const BASE_URL = process.env.BASE_URL || config.BASE_URL
   const [protocol, host, port] = BASE_URL.split(':')
-  const PORT = stage === 'dev' ? (parseInt(port, 10) || 2810) : ''
+  const dev_port = parseInt(port, 10) || 2810
+  const PORT = stage === 'dev' ? `:${dev_port}` : ''
 
   const DIST_PATH = `./dist/${project.name}`
   const ts = Date.now()
@@ -32,7 +33,7 @@ export const build = async (project, builder, stage = 'dev') => {
 
   const data = {
     ...project_data,
-    base_url: `${protocol}:${host}:${PORT}`,
+    base_url: `${protocol}:${host}${PORT}`,
     css: `
     <link href="/builder.css?ts=${ts}" rel="stylesheet">
     <link href="/project.css?ts=${ts}" rel="stylesheet">
