@@ -1,9 +1,7 @@
 import express from 'express'
 import {existsSync as file_exists} from 'fs'
+import config from '../default_config'
 import {build} from '../build'
-
-const DEV_PORT = 2810
-const DEV_BASE_URL = `http://localhost:${DEV_PORT}`
 
 const app = express()
 
@@ -18,6 +16,10 @@ const get_ts_diff = () => {
 }
 
 export function start_server(project, builder) {
+  const BASE_URL = process.env.BASE_URL || config.BASE_URL
+  const [protocol, host, port] = BASE_URL.split(':')
+  const PORT = parseInt(port, 10) || 2810
+
   app.use(
     async (req, res, next) => {
       // only build if at least 1 second has passed between requests
@@ -42,7 +44,7 @@ export function start_server(project, builder) {
     })
   )
 
-  app.listen(DEV_PORT, () => {
-    console.log(`${project.name} listening at http://localhost:${DEV_PORT}`)
+  app.listen(PORT, () => {
+    console.log(`${project.name} listening at ${protocol}:${host}:${PORT}`)
   })
 }
