@@ -31,12 +31,13 @@ export const build = async (project, builder, stage = 'dev') => {
     return console.error(errors)
   }
 
+  const base_url = `${protocol}:${host}${PORT}`
   const data = {
     ...project_data,
-    base_url: `${protocol}:${host}${PORT}`,
+    base_url,
     css: `
-    <link href="/builder.css?ts=${ts}" rel="stylesheet">
-    <link href="/project.css?ts=${ts}" rel="stylesheet">
+    <link href="${base_url}/builder.css?ts=${ts}" rel="stylesheet">
+    <link href="${base_url}/project.css?ts=${ts}" rel="stylesheet">
     `
   }
 
