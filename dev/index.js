@@ -1,20 +1,70 @@
-import dotenvJSON from 'dotenv-json'
-import {make_dir} from '../lib'
-import {start_server} from './server'
+import path from 'path'
+import express from 'express'
 
-const [,, project_name, builder_name] = process.argv
+import {is_empty_string} from '../lib/util'
 
-dotenvJSON({ path: `/var/local/${project_name}_dev.json`});
+const PORT = 2810
 
-const project = require(`../projects/${project_name}`)
-project.name = project_name
-project.path = `./projects/${project_name}`
+const get_components = base_dir => {
+  delete require.cache[require.resolve(`${base_dir}/theme`)]
+  const theme = require(`${base_dir}/theme`)
 
-const builder = require(`../builders/${builder_name}`)
-builder.name = builder_name
-builder.path = `./builders/${builder_name}`
+  delete require.cache[require.resolve(base_dir)]
+  const project = require(base_dir)
 
-const DIST_PATH = `./dist/${project_name}`
-make_dir(DIST_PATH)
+  return {theme, project}
+}
 
-start_server(project, builder)
+const get_base_url = (argv, params = {}) => {
+  if(!is_empty_string(argv.base_url)) {
+    return argv.base_url
+  }
+
+  if(!is_empty_string(params.base_url)) {
+    return data.base_url
+  }
+
+  return '/'
+}
+
+export const start_dev_server = (argv, base_dir) => {
+  const app = express()
+
+  app.use(express.static(`${base_dir}/dist`))
+
+  app.use(
+    async (req, res, next) => {
+      try {
+        const {theme, project} = get_components(base_dir)
+
+        // @TODO check theme and project
+
+        // get specific data from the project
+        const project_data = await project.get_data()
+
+        // @TODO validate project data
+
+        // send the request to the theme with the project data
+        const {content, status} = await theme.request(req.path, {
+          ...project_data, base_url: get_base_url(argv)
+        })
+
+        res.status(status || 200).send(content)
+      }
+      catch(error) { next(error) }
+    },
+
+    (error, req, res, next) => {
+      console.error(error.message)
+
+      res.status(500).send(`
+        <h1>${error.message}</h1>
+        <pre>${error.stack}</pre>
+      `)
+    }
+  )
+
+  app.listen(PORT, () => {
+    console.log(`listening at localhost:${PORT}`)
+  })
+}

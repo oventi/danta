@@ -1,17 +1,21 @@
 {
+  "name": "danta",
+  "version": "0.5.0",
   "license": "GPL-3.0",
-  "scripts": {
-    "dev": "node -r esm ./dev/index.js",
-    "build": "node -r esm ./build/cli.js"
-  },
-  "devDependencies": {
-    "@contentful/rich-text-html-renderer": "^14.1.2",
-    "ajv": "^7.1.1",
+  "bin": "./bin/index.js",
+  "dependencies": {
+    "@contentful/rich-text-html-renderer": "^15.0.0",
+    "commonmark": "^0.30.0",
+    "contentful": "^8.4.2",
     "dotenv-json": "^1.0.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "lodash": "^4.17.21",
-    "sass": "^1.27.0"
+    "mustache": "^4.2.0",
+    "nodejs-file-downloader": "^4.7.1",
+    "parcel": "^2.0.0-beta.3.1",
+    "strapi-sdk-javascript": "^0.3.3",
+    "traverse-folders": "^1.1.2",
+    "yargs": "^17.0.1"
   },
-  "dependencies": {}
+  "devDependencies": {}
 }
