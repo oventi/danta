@@ -1,9 +1,7 @@
 import path from 'path'
 import express from 'express'
 
-import {is_empty_string} from '../lib/util'
-
-const PORT = 2810
+import {get_base_url} from '../lib/util'
 
 const get_components = base_dir => {
   delete require.cache[require.resolve(`${base_dir}/theme`)]
@@ -15,19 +13,9 @@ const get_components = base_dir => {
   return {theme, project}
 }
 
-const get_base_url = (argv, params = {}) => {
-  if(!is_empty_string(argv.base_url)) {
-    return argv.base_url
-  }
-
-  if(!is_empty_string(params.base_url)) {
-    return data.base_url
-  }
-
-  return '/'
-}
-
 export const start_dev_server = (argv, base_dir) => {
+  const port = argv.port || 2810
+  const base_url = `http://localhost:${port}`
   const app = express()
 
   app.use(express.static(`${base_dir}/dist`))
@@ -46,7 +34,7 @@ export const start_dev_server = (argv, base_dir) => {
 
         // send the request to the theme with the project data
         const {content, status} = await theme.request(req.path, {
-          ...project_data, base_url: get_base_url(argv)
+          ...project_data, base_url: get_base_url(argv, {base_url})
         })
 
         res.status(status || 200).send(content)
@@ -64,7 +52,7 @@ export const start_dev_server = (argv, base_dir) => {
     }
   )
 
-  app.listen(PORT, () => {
-    console.log(`listening at localhost:${PORT}`)
+  app.listen(port, () => {
+    console.log(`listening at ${base_url}`)
   })
 }

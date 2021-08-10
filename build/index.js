@@ -19,7 +19,7 @@ const get_base_url = (argv, params = {}) => {
     return data.base_url
   }
 
-  return '/'
+  return ''
 }
 
 export async function build_project(argv, base_dir) {
