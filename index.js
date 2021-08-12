@@ -23,8 +23,6 @@ export default {
   render,
 
   build: (path, template_name, data) => {
-    console.log('building', `${dist}${path}`)
-
     const content = render(template_name, data)
     outputFileSync(`${dist}${path}`, content)
   },

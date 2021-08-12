@@ -6,6 +6,7 @@ import dotenvJSON from 'dotenv-json'
 import {build} from '../lib/parcel'
 import {start_dev_server} from '../dev'
 import {build_project} from '../build'
+import {errors} from '../errors'
 
 const argv = yargs(hideBin(process.argv)).argv
 const base_dir = path.resolve(process.cwd())
@@ -19,11 +20,29 @@ if(argv.dev) {
   start_dev_server(argv, base_dir).then(() => console.log(''))
 }
 else if(argv.build) {
-  const parcel = spawn('yarn', ['parcel', 'build', ...parcel_params])
-  parcel.stdout.pipe(process.stdout)
-  parcel.stderr.pipe(process.stderr)
+  console.log(['', '***** danta build *****'].join('\n'))
 
-  ;(async () => await build_project(argv, base_dir))()
+  build(error => {
+    console.error(['\n', errors.PARCEL, error.toString()].join('\n'))
+
+    process.exit(2) // css, javascripts or assets error
+  }).on('exit', code => {
+    if(code === 0) {
+      console.log('DONE')
+
+      return build_project(argv, base_dir)
+        .then(() => {
+          console.log('DONE', '\n')
+        })
+        .catch(error => {
+          console.error(['\n', errors.STATIC, error.message, ''].join('\n'))
+          process.exit(3)
+        })
+    }
+
+    console.error(`\n${errors.PARCEL_BUILD_UNDEFINED}\n`)
+    process.exit(4)
+  })
 }
 else {
   console.error('invalid danta command')

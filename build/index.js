@@ -23,9 +23,11 @@ const get_base_url = (argv, params = {}) => {
 }
 
 export async function build_project(argv, base_dir) {
+  process.stdout.write('- building static html files...')
+
   const {theme, project} = get_components(base_dir)
 
   const project_data = await project.get_data()
 
-  await theme.build({...project_data, base_url: get_base_url(argv)})
+  return theme.build({...project_data, base_url: get_base_url(argv)})
 }

@@ -65,14 +65,9 @@ export const start_dev_server = async (argv, base_dir) => {
     }
   )
 
-  watch({
-    on_error: error => {
-      if(error === null) {
-        return parcel_errors.length = 0
-      }
-
-      parcel_errors.push(error.toString())
-    }
+  watch(error => {
+    if(error === null) { return parcel_errors.length = 0 }
+    parcel_errors.push(error.toString())
   })
 
   await app.listen(port)
