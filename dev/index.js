@@ -1,7 +1,11 @@
+import {readFileSync} from 'fs'
 import path from 'path'
 import express from 'express'
+import mustache from 'mustache'
 
-import {get_base_url} from '../lib/util'
+import {divider, get_base_url} from '../lib/util'
+
+const error_template = readFileSync(`${__dirname}/../errors/template.mustache`, 'utf-8')
 
 const get_components = base_dir => {
   delete require.cache[require.resolve(`${base_dir}/theme`)]
@@ -13,7 +17,7 @@ const get_components = base_dir => {
   return {theme, project}
 }
 
-export const start_dev_server = (argv, base_dir) => {
+export const start_dev_server = async (argv, base_dir) => {
   const port = argv.port || 2810
   const base_url = `http://localhost:${port}`
   const app = express()
@@ -23,6 +27,8 @@ export const start_dev_server = (argv, base_dir) => {
   app.use(
     async (req, res, next) => {
       try {
+        console.log([divider, `Request ${req.path}`].join('\n'))
+
         const {theme, project} = get_components(base_dir)
 
         // @TODO check theme and project
@@ -37,22 +43,20 @@ export const start_dev_server = (argv, base_dir) => {
           ...project_data, base_url: get_base_url(argv, {base_url})
         })
 
+        console.log([`Response ${status || 200}`, divider].join('\n'))
         res.status(status || 200).send(content)
       }
       catch(error) { next(error) }
     },
 
     (error, req, res, next) => {
-      console.error(error.message)
+      const {name, message} = error
+      console.log([`${name}: ${message}`, divider].join('\n'))
 
-      res.status(500).send(`
-        <h1>${error.message}</h1>
-        <pre>${error.stack}</pre>
-      `)
+      res.status(500).send(mustache.render(error_template, {name, message}))
     }
   )
 
-  app.listen(port, () => {
-    console.log(`listening at ${base_url}`)
-  })
+  await app.listen(port)
+  console.log(`- dev server started at ${base_url}`)
 }
