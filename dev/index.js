@@ -2,9 +2,11 @@ import {readFileSync} from 'fs'
 import path from 'path'
 import express from 'express'
 import mustache from 'mustache'
-
+import {watch} from '../lib/parcel'
 import {divider, get_base_url} from '../lib/util'
+import {errors} from '../errors'
 
+const parcel_errors = []
 const error_template = readFileSync(`${__dirname}/../errors/template.mustache`, 'utf-8')
 
 const get_components = base_dir => {
@@ -28,6 +30,12 @@ export const start_dev_server = async (argv, base_dir) => {
     async (req, res, next) => {
       try {
         console.log([divider, `Request ${req.path}`].join('\n'))
+        if(parcel_errors.length > 0) {
+          const new_error = new Error(parcel_errors.join('\n'))
+          new_error.name = errors.PARCEL
+
+          throw new_error
+        }
 
         const {theme, project} = get_components(base_dir)
 
@@ -56,6 +64,16 @@ export const start_dev_server = async (argv, base_dir) => {
       res.status(500).send(mustache.render(error_template, {name, message}))
     }
   )
+
+  watch({
+    on_error: error => {
+      if(error === null) {
+        return parcel_errors.length = 0
+      }
+
+      parcel_errors.push(error.toString())
+    }
+  })
 
   await app.listen(port)
   console.log(`- dev server started at ${base_url}`)

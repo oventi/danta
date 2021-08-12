@@ -3,7 +3,7 @@ import {hideBin} from 'yargs/helpers'
 import path from 'path'
 import dotenvJSON from 'dotenv-json'
 
-import {watch, build} from '../lib/parcel'
+import {build} from '../lib/parcel'
 import {start_dev_server} from '../dev'
 import {build_project} from '../build'
 
@@ -16,7 +16,6 @@ dotenvJSON({path: env})
 if(argv.dev) {
   console.log(['', '***** danta dev *****'].join('\n'))
 
-  watch()
   start_dev_server(argv, base_dir).then(() => console.log(''))
 }
 else if(argv.build) {
