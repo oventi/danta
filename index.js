@@ -4,6 +4,7 @@ import {get_templates} from './lib/templates'
 import mustache from 'mustache'
 import {outputFileSync} from 'fs-extra'
 import * as util from './lib/util'
+import got from 'got'
 
 const dist = `${process.cwd()}/dist`
 
@@ -17,6 +18,7 @@ function render(template_name, data) {
 export default {
   get_contentful_da,
   get_strapi_da,
+  get_http_da: () => got,
 
   get_templates,
 

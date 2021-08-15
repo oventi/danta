@@ -32,7 +32,10 @@
   </head>
   <body>
     <h1>{{name}}</h1>
-    <pre>{{message}}</pre>
-
+    <pre>{{message}}
+    {{#stack}}
+  - {{.}}
+    {{/stack}}
+    </pre>
   </body>
 </html>
