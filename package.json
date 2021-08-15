@@ -15,7 +15,6 @@
     "mustache": "^4.2.0",
     "nodejs-file-downloader": "^4.7.1",
     "parcel": "^2.0.0-beta.3.1",
-    "strapi-sdk-javascript": "^0.3.3",
     "traverse-folders": "^1.1.2",
     "yargs": "^17.0.1"
   },
