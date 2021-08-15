@@ -7,6 +7,7 @@ import {divider, get_base_url} from '../lib/util'
 import {errors} from '../errors'
 
 const parcel_errors = []
+const stack = []
 const error_template = readFileSync(`${__dirname}/../errors/template.mustache`, 'utf-8')
 
 const get_components = base_dir => {
@@ -28,6 +29,8 @@ export const start_dev_server = async (argv, base_dir) => {
 
   app.use(
     async (req, res, next) => {
+      stack.length = 0
+
       try {
         console.log([divider, `Request ${req.path}`].join('\n'))
         if(parcel_errors.length > 0) {
@@ -42,11 +45,13 @@ export const start_dev_server = async (argv, base_dir) => {
         // @TODO check theme and project
 
         // get specific data from the project
-        const project_data = await project.get_data()
+        stack.push('project.get_data')
+        const project_data = await project.get_data('dev')
 
         // @TODO validate project data
 
         // send the request to the theme with the project data
+        stack.push('theme.request')
         const {content, status} = await theme.request(req.path, {
           ...project_data, base_url: get_base_url(argv, {base_url})
         })
@@ -61,7 +66,7 @@ export const start_dev_server = async (argv, base_dir) => {
       const {name, message} = error
       console.log([`${name}: ${message}`, divider].join('\n'))
 
-      res.status(500).send(mustache.render(error_template, {name, message}))
+      res.status(500).send(mustache.render(error_template, {name, message, stack}))
     }
   )
 
