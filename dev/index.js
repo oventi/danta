@@ -2,6 +2,7 @@ import {readFileSync} from 'fs'
 import path from 'path'
 import express from 'express'
 import mustache from 'mustache'
+import nocache from 'nocache'
 import {watch} from '../lib/parcel'
 import {divider, get_base_url} from '../lib/util'
 import {errors} from '../errors'
@@ -25,7 +26,9 @@ export const start_dev_server = async (argv, base_dir) => {
   const base_url = `http://localhost:${port}`
   const app = express()
 
-  app.use(express.static(`${base_dir}/dist`))
+  app.use(nocache())
+
+  app.use(express.static(`${base_dir}/dist`, {cacheControl: false}))
 
   app.use(
     async (req, res, next) => {
@@ -59,7 +62,7 @@ export const start_dev_server = async (argv, base_dir) => {
         console.log([`Response ${status || 200}`, divider].join('\n'))
         res.status(status || 200).send(content)
       }
-      catch(error) { next(error) }
+      catch (error) { next(error) }
     },
 
     (error, req, res, next) => {

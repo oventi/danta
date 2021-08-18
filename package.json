@@ -13,9 +13,9 @@
     "fs-extra": "^10.0.0",
     "got": "^11.8.2",
     "mustache": "^4.2.0",
+    "nocache": "^3.0.1",
     "nodejs-file-downloader": "^4.7.1",
     "parcel": "^2.0.0-beta.3.1",
-    "strapi-sdk-javascript": "^0.3.3",
     "traverse-folders": "^1.1.2",
     "yargs": "^17.0.1"
   },

@@ -2,6 +2,7 @@ import yargs from 'yargs/yargs'
 import {hideBin} from 'yargs/helpers'
 import path from 'path'
 import dotenvJSON from 'dotenv-json'
+import {rmdirSync} from 'fs'
 
 import {build} from '../lib/parcel'
 import {start_dev_server} from '../dev'
@@ -13,6 +14,8 @@ const base_dir = path.resolve(process.cwd())
 const env = argv.env || `${base_dir}/env.json`
 
 dotenvJSON({path: env})
+
+rmdirSync(`${base_dir}/dist`, {recursive: true})
 
 if(argv.dev) {
   console.log(['', '***** danta dev *****'].join('\n'))
