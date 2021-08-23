@@ -10,6 +10,9 @@ a tool to create static websites or apps using JSON data (usually from a CMS), t
 - modify the files to suit the project to your requirements
 - when ready, run `yarn build` and the built project will be in `./dist`
 
+## documentation
+[detailed documentation](./docs.index.md)
+
 ## tech stack
 - json data
 - javascript/node.js
