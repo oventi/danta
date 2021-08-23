@@ -5,6 +5,7 @@ import mustache from 'mustache'
 import {outputFileSync} from 'fs-extra'
 import * as util from './lib/util'
 import got from 'got'
+import path from 'path'
 
 const dist = `${process.cwd()}/dist`
 
@@ -24,9 +25,9 @@ export default {
 
   render,
 
-  build: (path, template_name, data) => {
+  build: (filepath, template_name, data) => {
     const content = render(template_name, data)
-    outputFileSync(`${dist}${path}`, content)
+    outputFileSync(path.join(dist, filepath), content)
   },
 
   util
