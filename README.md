@@ -3,7 +3,7 @@ a tool to create static websites or apps using JSON data (usually from a CMS), t
 
 ## quickstart
 - install [nodejs](https://nodejs.org/en/) 12.x LTS or later
-- install [yarn](https://yarnpkg.com/getting-started/install) berry (2) or later
+- install [yarn](https://classic.yarnpkg.com/en/docs/install) classic stable (1.22.x)
 - clone the [starter project](https://github.com/oventi/danta_calf)
 - run `yarn` and then `yarn dev`
 - open `http://localhost:2810`
