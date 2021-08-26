@@ -27,3 +27,10 @@ this guide covers full use of danta.
 │   └── templates           # theme's mustache files
 └── yarn.lock               # yarn lockfile
 ```
+
+## theme
+a theme is a combination of files, sass, javascript and mustache tempates
+to build static web projects. it has two special functions: request and build.
+
+request is used for development mode
+build is used for production mode
