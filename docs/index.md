@@ -1,6 +1,7 @@
 # guide
 
-this guide covers full use of danta.
+a danta project is essentially a node.js project with specific functions
+and configuration so it can build static web assets (websites, web apps, etc).
 
 ## file structure
 
@@ -28,9 +29,26 @@ this guide covers full use of danta.
 └── yarn.lock               # yarn lockfile
 ```
 
-## theme
-a theme is a combination of files, sass, javascript and mustache tempates
-to build static web projects. it has two special functions: request and build.
+## modes
 
-request is used for development mode
-build is used for production mode
+two modes are supported: dev and build. dev uses an express js simple server to
+serve routes. build uses other functions to create html files.
+
+### dev
+when starting to work on a danta project, run `yarn dev`, then load the project at `http://localhost:2810`. `parcel watch` is started in the background, and everytime a page is requested:
+
+- `get_data('dev')` @ `./index.js` is called
+ - the function can use any way to fetch or load data
+ - the function must return a js object
+- `request` @ `./theme/index.js` is called
+  - the requested path and data from `get_data` is sent
+  - content is built and sent with an http status
+- the content is rendered in the browser
+
+- build is used for production mode
+
+### build
+TBD
+
+__for naming__
+https://animalcorner.org/animals/tapir/
