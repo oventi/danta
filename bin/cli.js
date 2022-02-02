@@ -11,7 +11,7 @@ import {errors} from '../errors'
 
 const argv = yargs(hideBin(process.argv)).argv
 const base_dir = path.resolve(process.cwd())
-const env = argv.env || `${base_dir}/env.json`
+const env = argv.env || `${base_dir}/.env.json`
 
 dotenvJSON({path: env})
 
