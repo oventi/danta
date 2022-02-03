@@ -11,9 +11,11 @@ const parcel_errors = []
 const stack = []
 const error_template = readFileSync(`${__dirname}/../errors/template.mustache`, 'utf-8')
 
-const get_components = base_dir => {
-  delete require.cache[require.resolve(`${base_dir}/theme`)]
-  const theme = require(`${base_dir}/theme`)
+const get_components = (base_dir, theme_name) => {
+  const theme_path = `${base_dir}/node_modules/${theme_name}`
+
+  delete require.cache[require.resolve(theme_path)]
+  const theme = require(theme_path)
 
   delete require.cache[require.resolve(base_dir)]
   const project = require(base_dir)
@@ -22,6 +24,10 @@ const get_components = base_dir => {
 }
 
 export const start_dev_server = async (argv, base_dir) => {
+  if(!argv.theme) {
+    throw errors.THEME
+  }
+
   const port = argv.port || 2810
   const base_url = `http://localhost:${port}`
   const app = express()
@@ -43,7 +49,7 @@ export const start_dev_server = async (argv, base_dir) => {
           throw new_error
         }
 
-        const {theme, project} = get_components(base_dir)
+        const {theme, project} = get_components(base_dir, argv.theme)
 
         // @TODO check theme and project
 
