@@ -5,23 +5,15 @@ import mustache from 'mustache'
 import nocache from 'nocache'
 import {watch} from '../lib/parcel'
 import {divider, get_base_url} from '../lib/util'
+import {get_components} from '../lib/components'
 import {errors} from '../errors'
 
 const parcel_errors = []
 const stack = []
-const error_template = readFileSync(`${__dirname}/../errors/template.mustache`, 'utf-8')
-
-const get_components = (base_dir, theme_name) => {
-  const theme_path = `${base_dir}/node_modules/${theme_name}`
-
-  delete require.cache[require.resolve(theme_path)]
-  const theme = require(theme_path)
-
-  delete require.cache[require.resolve(base_dir)]
-  const project = require(base_dir)
-
-  return {theme, project}
-}
+const error_template = readFileSync(
+  `${__dirname}/../errors/template.mustache`,
+  'utf-8'
+)
 
 export const start_dev_server = async (argv, base_dir) => {
   if(!argv.theme) {
@@ -62,25 +54,31 @@ export const start_dev_server = async (argv, base_dir) => {
         // send the request to the theme with the project data
         stack.push('theme.request')
         const {content, status} = await theme.request(req.path, {
-          ...project_data, base_url: get_base_url(argv, {base_url})
+          ...project_data,
+          base_url: get_base_url(argv, {base_url})
         })
 
         console.log([`Response ${status || 200}`, divider].join('\n'))
         res.status(status || 200).send(content)
+      } catch(error) {
+        next(error)
       }
-      catch (error) { next(error) }
     },
 
     (error, req, res, next) => {
       const {name, message} = error
       console.log([`${name}: ${message}`, divider].join('\n'))
 
-      res.status(500).send(mustache.render(error_template, {name, message, stack}))
+      res
+        .status(500)
+        .send(mustache.render(error_template, {name, message, stack}))
     }
   )
 
-  watch(error => {
-    if(error === null) { return parcel_errors.length = 0 }
+  watch((error) => {
+    if(error === null) {
+      return (parcel_errors.length = 0)
+    }
     parcel_errors.push(error.toString())
   })
 
