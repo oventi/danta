@@ -18,7 +18,7 @@ export async function build_project(argv, base_dir) {
 
   const {theme, project} = get_components(base_dir, argv.theme)
 
-  const project_data = await project.get_data()
+  const project_data = await project.get_data('build')
 
   return theme.build({...project_data, base_url: get_base_url(argv)})
 }
