@@ -6,6 +6,7 @@ import nocache from 'nocache'
 import {watch} from '../lib/parcel'
 import {divider, get_base_url} from '../lib/util'
 import {get_components} from '../lib/components'
+import {validate_data} from '../lib/validation'
 import {errors} from '../errors'
 
 const parcel_errors = []
@@ -49,7 +50,7 @@ export const start_dev_server = async (argv, base_dir) => {
         stack.push('project.get_data')
         const project_data = await project.get_data('dev')
 
-        // @TODO validate project data
+        validate_data(project_data, theme.get_schema())
 
         // send the request to the theme with the project data
         stack.push('theme.request')
