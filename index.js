@@ -8,9 +8,10 @@ import got from 'got'
 import path from 'path'
 
 const dist = `${process.cwd()}/dist`
+let theme_name = null
 
 function render(template_name, data) {
-  const templates = get_templates()
+  const templates = get_templates(theme_name)
   const template = templates[template_name]
 
   return mustache.render(template, data, templates)
@@ -20,6 +21,8 @@ export default {
   get_contentful_da,
   get_strapi_da,
   get_http_da: () => got,
+
+  set_theme: (name) => (theme_name = name),
 
   get_templates,
 

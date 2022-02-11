@@ -5,6 +5,7 @@
   "bin": "./bin/index.js",
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^15.0.0",
+    "ajv": "^8.10.0",
     "commonmark": "^0.30.0",
     "contentful": "^8.4.2",
     "dotenv-json": "^1.0.0",

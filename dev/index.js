@@ -5,23 +5,22 @@ import mustache from 'mustache'
 import nocache from 'nocache'
 import {watch} from '../lib/parcel'
 import {divider, get_base_url} from '../lib/util'
+import {get_components} from '../lib/components'
+import {validate_data} from '../lib/validation'
 import {errors} from '../errors'
 
 const parcel_errors = []
 const stack = []
-const error_template = readFileSync(`${__dirname}/../errors/template.mustache`, 'utf-8')
-
-const get_components = base_dir => {
-  delete require.cache[require.resolve(`${base_dir}/theme`)]
-  const theme = require(`${base_dir}/theme`)
-
-  delete require.cache[require.resolve(base_dir)]
-  const project = require(base_dir)
-
-  return {theme, project}
-}
+const error_template = readFileSync(
+  `${__dirname}/../errors/template.mustache`,
+  'utf-8'
+)
 
 export const start_dev_server = async (argv, base_dir) => {
+  if(!argv.theme) {
+    throw errors.THEME
+  }
+
   const port = argv.port || 2810
   const base_url = `http://localhost:${port}`
   const app = express()
@@ -43,7 +42,7 @@ export const start_dev_server = async (argv, base_dir) => {
           throw new_error
         }
 
-        const {theme, project} = get_components(base_dir)
+        const {theme, project} = get_components(base_dir, argv.theme)
 
         // @TODO check theme and project
 
@@ -51,30 +50,36 @@ export const start_dev_server = async (argv, base_dir) => {
         stack.push('project.get_data')
         const project_data = await project.get_data('dev')
 
-        // @TODO validate project data
+        validate_data(project_data, theme.get_schema())
 
         // send the request to the theme with the project data
         stack.push('theme.request')
         const {content, status} = await theme.request(req.path, {
-          ...project_data, base_url: get_base_url(argv, {base_url})
+          ...project_data,
+          base_url: get_base_url(argv, {base_url})
         })
 
         console.log([`Response ${status || 200}`, divider].join('\n'))
         res.status(status || 200).send(content)
+      } catch(error) {
+        next(error)
       }
-      catch (error) { next(error) }
     },
 
     (error, req, res, next) => {
       const {name, message} = error
       console.log([`${name}: ${message}`, divider].join('\n'))
 
-      res.status(500).send(mustache.render(error_template, {name, message, stack}))
+      res
+        .status(500)
+        .send(mustache.render(error_template, {name, message, stack}))
     }
   )
 
-  watch(error => {
-    if(error === null) { return parcel_errors.length = 0 }
+  watch((error) => {
+    if(error === null) {
+      return (parcel_errors.length = 0)
+    }
     parcel_errors.push(error.toString())
   })
 

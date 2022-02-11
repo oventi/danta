@@ -11,7 +11,7 @@ import {errors} from '../errors'
 
 const argv = yargs(hideBin(process.argv)).argv
 const base_dir = path.resolve(process.cwd())
-const env = argv.env || `${base_dir}/env.json`
+const env = argv.env || `${base_dir}/.env.json`
 
 dotenvJSON({path: env})
 
@@ -21,15 +21,14 @@ if(argv.dev) {
   console.log(['', '***** danta dev *****'].join('\n'))
 
   start_dev_server(argv, base_dir).then(() => console.log(''))
-}
-else if(argv.build) {
+} else if(argv.build) {
   console.log(['', '***** danta build *****'].join('\n'))
 
-  build(error => {
+  build((error) => {
     console.error(['\n', errors.PARCEL, error.toString()].join('\n'))
 
     process.exit(2) // css, javascripts or assets error
-  }).on('exit', code => {
+  }).on('exit', (code) => {
     if(code === 0) {
       console.log('DONE')
 
@@ -37,8 +36,10 @@ else if(argv.build) {
         .then(() => {
           console.log('DONE', '\n')
         })
-        .catch(error => {
-          console.error(['\n', errors.STATIC, error.message, ''].join('\n'))
+        .catch((error) => {
+          console.error(
+            ['\n', error.name || errors.STATIC, error.message, ''].join('\n')
+          )
           process.exit(3)
         })
     }
@@ -46,8 +47,7 @@ else if(argv.build) {
     console.error(`\n${errors.PARCEL_BUILD_UNDEFINED}\n`)
     process.exit(4)
   })
-}
-else {
+} else {
   console.error('invalid danta command')
   process.exit(1)
 }
