@@ -10,17 +10,12 @@
     "semi": ["error", "never"],
     "curly": ["error", "all"],
     "object-curly-spacing": ["error", "never"],
-    "keyword-spacing": [
-      "error",
-      {
-        "overrides": {
-          "if": { "after": false },
-          "for": { "after": false },
-          "while": { "after": false },
-          "catch": { "after": false }
-        }
-      }
-    ],
+    "keyword-spacing": ["error", {"overrides": {
+      "if": {"after": false},
+      "for": {"after": false},
+      "while": {"after": false},
+      "catch": {"after": false}
+    }}],
     "comma-dangle": ["error", "never"]
   }
 }
