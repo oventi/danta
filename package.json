@@ -12,7 +12,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.3",
     "fs-extra": "^10.0.0",
-    "got": "^11.8.2",
+    "got": "^11.8.5",
     "mustache": "^4.2.0",
     "nocache": "^3.0.1",
     "nodejs-file-downloader": "^4.7.1",
