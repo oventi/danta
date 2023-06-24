@@ -20,5 +20,10 @@
     "traverse-folders": "^1.1.2",
     "yargs": "^17.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^8.43.0"
+  },
+  "resolutions": {
+    "nan": "github:jkleinsc/nan#remove_accessor_signature"
+  }
 }
